@@ -263,31 +263,6 @@ gsap.from(".intro-card",{
 
 
 
-gsap.registerPlugin(ScrollTrigger);
-
-gsap.utils.toArray(".proj").forEach((proj, i) => {
-  const direction = proj.classList.contains("from-left") ? -150 :
-                    proj.classList.contains("from-right") ? 150 : 0;
-  const yOffset = proj.classList.contains("from-bottom") ? 120 : 0;
-
-  gsap.fromTo(proj,
-    { opacity: 0, x: direction, y: yOffset, rotateY: i === 1 ? 6 : 0 },
-    {
-      opacity: 1, x: 0, y: 0, rotateY: 0,
-      duration: 1.4, ease: "power3.out",
-      delay: i * 0.2,
-      scrollTrigger: {
-        trigger: proj,
-        start: "top 90%",
-      }
-    }
-  );
-});
-
-
-
-
-
 
 
 
