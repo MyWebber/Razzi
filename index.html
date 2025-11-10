@@ -69,30 +69,34 @@
 
 
 
-<!-- SECTIE: Bedrijf Intro -->
 <section class="company-intro">
-  <div class="intro-inner">
-    <div class="intro-text">
-      <h2>Wij laten merken groeien met<br><span>creatieve strategie en impactvolle content.</span></h2>
-      <p>
-        Razzi is een full-service bureau gespecialiseerd in
-        <strong>videografie</strong>, <strong>editing</strong> en
-        <strong>organische marketing</strong>.  
-        Wij helpen merken hun identiteit te versterken met visuals
-        die emotie, data en design combineren.
+  <div class="intro-bg">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <div class="intro-container">
+    <div class="intro-left">
+      <h2 class="intro-title">
+        Wij transformeren <span>ideeën</span> naar <span>digitale impact</span>
+      </h2>
+      <p class="intro-subtext">
+        Strategie, design en technologie komen samen om merken te versterken.  
+        Elke lijn code en elk detail is ontworpen met precisie.
       </p>
-      <a href="#" class="btn-learn">Meer over ons</a>
+      <a href="#contact" class="intro-btn">Ontdek onze aanpak</a>
     </div>
 
-    <div class="intro-visual">
-      <img
-        src="razzi foto.jpg"
-        alt="Ali Media team in actie"
-      />
+    <div class="intro-right">
+      <div class="intro-card">
+        <img src="razzi foto.jpg" alt="Project voorbeeld">
+        <div class="card-overlay"></div>
+      </div>
     </div>
   </div>
-  
 </section>
+
 
 
 
@@ -117,6 +121,10 @@
 
 <!-- SECTIE 3: Partners / Logos -->
 <section class="partners">
+  <div class="partner-spark"></div>
+<div class="partner-spark"></div>
+<div class="partner-spark"></div>
+
   <div class="partners-header">
     <span class="section-label">Vertrouwd door</span>
     <h2>Bedrijven waar wij mee samenwerken</h2>
@@ -185,58 +193,46 @@
 </section>
 
 
-<section class="projects-alt" id="projects">
-  <div class="projects-alt__intro">
-    <h2 class="projects-alt__title">Cinematic <span>Showcase</span></h2>
-    <p class="projects-alt__subtitle">
-      Een greep uit onze meest visuele projecten – waar strategie, emotie en esthetiek samenkomen.
+
+
+
+
+
+
+<section class="projects-3d">
+  <div class="projects-3d__intro">
+    <h2 class="projects-3d__title">Onze <span>Projecten</span></h2>
+    <p class="projects-3d__subtitle">
+      Ontdek een selectie van onze meest indrukwekkende creaties — 
+      waar design, strategie en technologie samenkomen.
     </p>
   </div>
 
-  <div class="projects-alt__grid">
-    <!-- Project 1 -->
-    <article class="proj-card from-left">
-      <div class="proj-media">
-        <video autoplay muted loop playsinline>
-          <source src="ScreenRecording_11-10-2025 11-06-48_1.mp4" type="video/mp4">
-        </video>
+  <div class="projects-3d__inner">
+    <div class="proj proj--left from-left">
+      <video src="ScreenRecording_11-10-2025 10-56-58_1.mp4" autoplay muted loop></video>
+      <div class="proj__overlay">
+        <h3>Creative Reel</h3>
       </div>
-      <div class="proj-info">
-        <h3>Eethuis Casablanca</h3>
-        <p>Een filmisch campagneverhaal voor een bekende eetzaak.</p>
-        <a href="#" class="btn-view">Bekijk project</a>
-      </div>
-    </article>
+    </div>
 
-    <!-- Project 2 -->
-    <article class="proj-card tall from-bottom">
-      <div class="proj-media">
-        <video autoplay muted loop playsinline>
-          <source src="ScreenRecording_11-10-2025 10-56-58_1.mp4" type="video/mp4">
-        </video>
+    <div class="proj proj--center from-bottom">
+      <video src="ScreenRecording_11-10-2025 11-06-48_1.mp4" autoplay muted loop></video>
+      <div class="proj__overlay">
+        <h3>Brand Story</h3>
       </div>
-      <div class="proj-info">
-        <h3>KBG Customs</h3>
-        <p>High-energy montage met moderne visuals en precieze sound design.</p>
-        <a href="#" class="btn-view">Bekijk project</a>
-      </div>
-    </article>
+    </div>
 
-    <!-- Project 3 -->
-    <article class="proj-card from-right">
-      <div class="proj-media">
-        <video autoplay muted loop playsinline>
-          <source src="ScreenRecording_11-10-2025 11-01-30_1.mp4" type="video/mp4">
-        </video>
+    <div class="proj proj--right from-right">
+      <video src="ScreenRecording_11-10-2025 11-01-30_1.mp4" autoplay muted loop></video>
+      <div class="proj__overlay">
+        <h3>Visual Identity</h3>
       </div>
-      <div class="proj-info">
-        <h3>Hero Luxury</h3>
-        <p>Een krachtige teaser met tempo, energie en emotie.</p>
-        <a href="#" class="btn-view">Bekijk project</a>
-      </div>
-    </article>
+    </div>
   </div>
 </section>
+
+
 
 <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
@@ -346,36 +342,43 @@
 
 
 <section class="contact-section" id="contact">
+  <!-- 🔆 Achtergrond gloed en particles -->
+  <div class="contact-bg">
+    <div class="contact-particle"></div>
+    <div class="contact-particle"></div>
+    <div class="contact-particle"></div>
+  </div>
+
   <div class="contact-container">
+    <!-- 🔹 Linkerzijde -->
     <div class="contact-left">
       <span class="section-label">Neem contact op</span>
-      <h2 class="contact-title">Laten we <span>samenwerken</span></h2>
+      <h2 class="contact-title">Klaar om <span>samen</span> te werken?</h2>
       <p class="contact-text">
-        Heb je een project, idee of wil je jouw merk naar het volgende niveau tillen?  
-        Neem contact op — we reageren meestal binnen 24 uur.
+        Laten we jouw idee omzetten in een resultaat dat eruit springt.  
+        Vul het formulier in of stuur ons direct een bericht.
       </p>
 
       <div class="contact-details">
-        <p><strong>📧 E-mail:</strong> <a href="mailto:voorbeeld@outlook.nl">info@voorbeeld.nl</a></p>
-        <p><strong>📞 Telefoon:</strong> <a href="tel:+31600000000">+31 6 00 00 00 00</a></p>
-        <p><strong>📍 Locatie:</strong> Den Haag, Nederland</p>
+        📞 <a href="tel:+31612345678">+31 6 12 34 56 78</a><br>
+        ✉️ <a href="mailto:info@mywebber.nl">info@mywebber.nl</a><br>
+        🌐 <a href="https://www.mywebber.nl" target="_blank">www.mywebber.nl</a>
       </div>
     </div>
 
-    <div class="contact-right">
-      <form class="contact-form">
-        <div class="form-group">
-          <input type="text" placeholder="Naam" required>
-        </div>
-        <div class="form-group">
-          <input type="email" placeholder="E-mailadres" required>
-        </div>
-        <div class="form-group">
-          <textarea placeholder="Bericht" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="cta-btn">Verstuur bericht</button>
-      </form>
-    </div>
+    <!-- 🔹 Rechterzijde -->
+    <form class="contact-form" action="https://formspree.io/f/maygkzwq" method="POST">
+      <div class="form-group">
+        <input type="text" name="name" placeholder="Naam" required />
+      </div>
+      <div class="form-group">
+        <input type="email" name="email" placeholder="E-mailadres" required />
+      </div>
+      <div class="form-group">
+        <textarea name="message" rows="5" placeholder="Bericht..." required></textarea>
+      </div>
+      <button type="submit" class="cta-btn">Verstuur Bericht</button>
+    </form>
   </div>
 </section>
 
@@ -384,49 +387,53 @@
 
 
 
+<footer class="footer-modern">
+  <div class="footer-glow"></div>
+  <div class="footer-particle"></div>
+  <div class="footer-particle"></div>
+  <div class="footer-particle"></div>
 
-<footer class="footer">
-  <div class="footer-container">
-    <!-- Logo + tagline -->
-    <div class="footer-brand">
-      <img src="razzi logo.png" alt="MyWebber Logo" class="footer-logo">
-      <p class="footer-tagline">
-        Digitale creativiteit, <span>technologische perfectie</span>.
-      </p>
+  <div class="footer-inner">
+    <!-- 1️⃣ Branding -->
+    <div class="footer-col brand">
+      <img src="razzi logo.png" alt="MyWebber" class="footer-logo" />
+      <p class="tagline">New Design. New Code. Next Level Results.</p>
     </div>
 
-    <!-- Navigatie -->
-    <div class="footer-links">
+    <!-- 2️⃣ Links -->
+    <div class="footer-col links">
+      <h4>Navigatie</h4>
       <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#diensten">Diensten</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#projecten">Projecten</a></li>
+        <li><a href="#over">Over ons</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
 
-    <!-- Contact info -->
-    <div class="footer-contact">
-      <p><i class="fa-solid fa-location-dot"></i> Den Haag, Nederland</p>
-      <p><i class="fa-solid fa-envelope"></i> info@voorbeeld.nl</p>
-      <p><i class="fa-solid fa-phone"></i> +31 6 00 00 00 00</p>
+    <!-- 3️⃣ Contact -->
+    <div class="footer-col contact">
+      <h4>Contact</h4>
+      <p><a>info@mywebber.nl</a></p>
+      <p><a >+31 6 12 34 56 78</a></p>
+      <div class="socials">
+        <a href="https://wa.me/31612345678" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.snapchat.com/add/mywebber" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
+        <a href="https://www.instagram.com/mywebber" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
     </div>
   </div>
 
-  <!-- Socials -->
-  <div class="footer-socials">
-    <a href="#"><i class="fab fa-instagram"></i></a>
-    <a href="#"><i class="fab fa-tiktok"></i></a>
-    <a href="#"><i class="fab fa-youtube"></i></a>
-  </div>
-
-  <!-- Bottom -->
   <div class="footer-bottom">
-    <p>© 2025 <span>RAZZI</span>. Alle rechten voorbehouden.</p>
+    <p>© <span id="year"></span> MyWebber — Built with ⚡ by Ali El Azraki</p>
   </div>
 </footer>
 
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
 
  <script src="razzi.js"></script>
-
 
