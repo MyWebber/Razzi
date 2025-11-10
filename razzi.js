@@ -84,17 +84,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }, about);
   }
 
-  // ====== 4) Company intro (scoped)
-  const companyIntro = $(".company-intro");
-  if (companyIntro) {
-    gsap.context(()=>{
-      const tl = gsap.timeline({ scrollTrigger:{ trigger:companyIntro, start:"top 80%", end:"bottom 40%", scrub:true }});
-      tl.to(".intro-text",{ x:0,opacity:1,duration:1.2,ease:"power4.out" },0)
-        .to(".intro-visual",{ x:0,opacity:1,duration:1.2,ease:"power4.out" },0)
-        .to(".intro-visual img",{ rotateY:0, scale:1, duration:1.4, ease:"power4.out" },0.1);
-      gsap.to(".intro-visual img",{ scrollTrigger:{ trigger:companyIntro, start:"top bottom", end:"bottom top", scrub:true }, yPercent:-15 });
-    }, companyIntro);
-  }
+
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.from(".intro-left",{
+  scrollTrigger:{trigger:".company-intro",start:"top 80%"},
+  x:-100,opacity:0,duration:1.2,ease:"power3.out"
+});
+
+gsap.from(".intro-card",{
+  scrollTrigger:{trigger:".company-intro",start:"top 80%"},
+  x:100,opacity:0,duration:1.2,ease:"power3.out"
+});
+
+
 
   // ====== 5) Reels (IntersectionObserver, no GSAP)
   const reelCards = $$(".reel");
@@ -253,23 +256,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+
+
+
+
+
+
+
 gsap.registerPlugin(ScrollTrigger);
 
-// Fade in + direction effect
-gsap.utils.toArray(".proj-card").forEach((card, i) => {
-  const direction = card.classList.contains("from-left") ? -80 :
-                    card.classList.contains("from-right") ? 80 :
-                    card.classList.contains("from-bottom") ? 0 : 0;
-  const yOffset = card.classList.contains("from-bottom") ? 80 : 0;
+gsap.utils.toArray(".proj").forEach((proj, i) => {
+  const direction = proj.classList.contains("from-left") ? -150 :
+                    proj.classList.contains("from-right") ? 150 : 0;
+  const yOffset = proj.classList.contains("from-bottom") ? 120 : 0;
 
-  gsap.fromTo(card, 
-    { opacity: 0, x: direction, y: yOffset },
-    { 
-      opacity: 1, x: 0, y: 0,
-      duration: 1.2, ease: "power3.out",
-      delay: i * 0.15,
+  gsap.fromTo(proj,
+    { opacity: 0, x: direction, y: yOffset, rotateY: i === 1 ? 6 : 0 },
+    {
+      opacity: 1, x: 0, y: 0, rotateY: 0,
+      duration: 1.4, ease: "power3.out",
+      delay: i * 0.2,
       scrollTrigger: {
-        trigger: card,
+        trigger: proj,
         start: "top 90%",
       }
     }
@@ -283,52 +291,49 @@ gsap.utils.toArray(".proj-card").forEach((card, i) => {
 
 
 
+
+
 gsap.registerPlugin(ScrollTrigger);
 
-// USP Cards Fade-in
+// Fade-in van USP-kaarten
 gsap.utils.toArray(".usp__card").forEach((card, i) => {
-  gsap.to(card, {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    delay: i * 0.15,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: card,
-      start: "top 90%",
+  gsap.fromTo(card,
+    { opacity: 0, y: 60 },
+    {
+      opacity: 1, y: 0,
+      duration: 1.2, ease: "power3.out",
+      delay: i * 0.15,
+      scrollTrigger: {
+        trigger: card,
+        start: "top 85%"
+      }
+    }
+  );
+});
+
+// Teller-animatie voor cijfers
+const counters = document.querySelectorAll(".stat__number");
+counters.forEach(counter => {
+  let target = +counter.getAttribute("data-target");
+  let triggered = false;
+
+  ScrollTrigger.create({
+    trigger: counter,
+    start: "top 90%",
+    onEnter: () => {
+      if (!triggered) {
+        triggered = true;
+        gsap.to(counter, {
+          innerText: target,
+          duration: 2,
+          snap: { innerText: 1 },
+          ease: "power1.out"
+        });
+      }
     }
   });
 });
 
-// Teller animatie
-const counters = document.querySelectorAll(".stat__number");
-let counterTriggered = false;
-
-ScrollTrigger.create({
-  trigger: ".usp__stats",
-  start: "top 80%",
-  once: true,
-  onEnter: () => {
-    if (!counterTriggered) {
-      counters.forEach(counter => {
-        const target = +counter.getAttribute("data-target");
-        let current = 0;
-        const increment = target / 80; // snelheid van tellen
-        const updateCount = () => {
-          current += increment;
-          if (current < target) {
-            counter.textContent = Math.floor(current);
-            requestAnimationFrame(updateCount);
-          } else {
-            counter.textContent = target;
-          }
-        };
-        updateCount();
-      });
-      counterTriggered = true;
-    }
-  }
-});
 
 
 
@@ -389,23 +394,6 @@ gsap.to(".cta-box", {
 
 
 
-gsap.registerPlugin(ScrollTrigger);
-
-gsap.from(".contact-left", {
-  scrollTrigger: { trigger: ".contact-section", start: "top 85%" },
-  x: -80,
-  opacity: 0,
-  duration: 1.2,
-  ease: "power3.out"
-});
-
-gsap.from(".contact-right", {
-  scrollTrigger: { trigger: ".contact-section", start: "top 85%" },
-  x: 80,
-  opacity: 0,
-  duration: 1.2,
-  ease: "power3.out"
-});
 
 
 
@@ -451,4 +439,3 @@ gsap.from(".footer-bottom", {
   ease: "power3.out",
   delay: 0.3
 });
-
