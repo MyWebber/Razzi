@@ -892,7 +892,6 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 
 
 
-
 :root {
   --accent: #ffea32;
   --primary: #6b6b6b;
@@ -900,11 +899,12 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
   --gray: #d2d2d2;
 }
 
+/* ===== SECTION WRAPPER ===== */
 .projects-showcase {
   position: relative;
   background: linear-gradient(180deg, #505050 0%, #6b6b6b 60%, #5f5f5f 100%);
   color: var(--text);
-  padding: 10rem 8%;
+  padding: clamp(5rem, 10vw, 10rem) clamp(5%, 8vw, 8%);
   overflow: hidden;
   z-index: 1;
 }
@@ -912,25 +912,28 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 /* ===== HEADER ===== */
 .showcase-header {
   text-align: center;
-  margin-bottom: 5rem;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
 }
+
 .showcase-title {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
-  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-size: clamp(2rem, 5vw, 4.5rem);
   background: linear-gradient(90deg, #fff, var(--accent), #fff);
   background-size: 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shine 6s linear infinite;
 }
+
 .showcase-subtitle {
   color: var(--gray);
-  font-size: 1.15rem;
+  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
   max-width: 700px;
   margin: 1rem auto 0;
   line-height: 1.7;
 }
+
 @keyframes shine {
   0% { background-position: 0%; }
   100% { background-position: 300%; }
@@ -942,14 +945,14 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-auto-rows: 120px;
-  gap: 1.5rem;
+  gap: clamp(1rem, 1.5vw, 1.5rem);
 }
 
-/* === INDIVIDUELE ITEMS === */
+/* ===== MOSAIC ITEMS ===== */
 .mosaic-item {
   position: relative;
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 10px;
   background: #000;
   box-shadow: 0 25px 60px rgba(0,0,0,0.45);
   transition: all 0.6s ease;
@@ -957,7 +960,7 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
   cursor: pointer;
 }
 
-/* Layout-plaatsing */
+/* ===== GRID PLACEMENT (Desktop) ===== */
 .mosaic-item.large {
   grid-column: 1 / span 7;
   grid-row: 1 / span 4;
@@ -980,7 +983,7 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
   z-index: 1;
 }
 
-/* VIDEO */
+/* ===== VIDEO ===== */
 .mosaic-item video {
   width: 100%;
   height: 100%;
@@ -991,7 +994,7 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
   transition: transform 1s ease, filter 0.8s ease;
 }
 
-/* Hover effects */
+/* ===== HOVER EFFECT ===== */
 .mosaic-item:hover {
   transform: scale(1.03) rotateY(4deg);
   box-shadow: 0 40px 90px rgba(255,234,50,0.25);
@@ -1001,36 +1004,109 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
   filter: brightness(1);
 }
 
-/* Overlay text */
+/* ===== OVERLAY TEXT ===== */
 .overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 2rem;
+  padding: clamp(1.5rem, 2.5vw, 2rem);
   background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);
 }
+
 .overlay h3 {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
   color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* RESPONSIVE */
-@media (max-width: 992px) {
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+
+/* --- Tablets (1024px en kleiner) --- */
+@media (max-width: 1024px) {
+  .mosaic-grid {
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 120px;
+  }
+
+  .mosaic-item.large {
+    grid-column: 1 / span 6;
+    grid-row: 1 / span 4;
+  }
+
+  .mosaic-item.medium {
+    grid-column: 1 / span 3;
+    grid-row: 5 / span 2;
+    transform: none;
+  }
+
+  .mosaic-item.small:nth-of-type(3) {
+    grid-column: 4 / span 3;
+    grid-row: 5 / span 2;
+  }
+
+  .mosaic-item.small:nth-of-type(4) {
+    grid-column: 1 / span 6;
+    grid-row: 7 / span 2;
+  }
+}
+
+/* --- Mobiel (768px en kleiner) --- */
+@media (max-width: 768px) {
+  .projects-showcase {
+    padding: 6rem 5%;
+  }
   .mosaic-grid {
     grid-template-columns: 1fr;
     grid-auto-rows: auto;
   }
   .mosaic-item {
-    transform: none !important;
     grid-column: auto;
     grid-row: auto;
+    transform: none !important;
   }
   .mosaic-item + .mosaic-item {
     margin-top: 2rem;
+  }
+  .overlay h3 {
+    font-size: 1rem;
+  }
+}
+
+/* --- Kleine telefoons (480px en kleiner) --- */
+@media (max-width: 480px) {
+  .projects-showcase {
+    padding: 5rem 1.5rem;
+  }
+  .showcase-title {
+    font-size: 2rem;
+  }
+  .showcase-subtitle {
+    font-size: 0.9rem;
+  }
+  .mosaic-item {
+    border-radius: 8px;
+  }
+  .overlay {
+    padding: 1.25rem;
+  }
+  .overlay h3 {
+    font-size: 0.95rem;
+  }
+}
+
+/* --- Ultra-wide (min 2000px) --- */
+@media (min-width: 2000px) {
+  .projects-showcase {
+    padding: 12rem 15%;
+  }
+  .mosaic-grid {
+    gap: 2rem;
+  }
+  .overlay h3 {
+    font-size: 1.5rem;
   }
 }
 
@@ -1057,9 +1133,9 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 /* ====== WRAPPER ====== */
 .usp-section {
   position: relative;
-background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
+  background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
   color: var(--text);
-  padding: 10rem 8%;
+  padding: clamp(5rem, 10vw, 10rem) clamp(5%, 8vw, 8%);
   text-align: center;
   overflow: hidden;
   z-index: 1;
@@ -1070,6 +1146,8 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 .usp-section::before {
   content: "";
   position: absolute;
+  top: 0;
+  left: 50%;
   width: 1100px;
   height: 700px;
   transform: translateX(-50%);
@@ -1111,12 +1189,13 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
   margin: 0 auto 6rem;
   position: relative;
   z-index: 2;
+  padding: 0 1rem;
 }
 
 .usp__title {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
-  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-size: clamp(1.8rem, 5vw, 4rem);
   margin-bottom: 1rem;
   background: linear-gradient(90deg, #fff, var(--accent), #fff);
   -webkit-background-clip: text;
@@ -1133,9 +1212,10 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 
 .usp__subtitle {
   color: var(--gray);
-  font-size: 1.15rem;
+  font-size: clamp(0.95rem, 1.2vw, 1.15rem);
   line-height: 1.8;
   opacity: 0.9;
+  padding: 0 0.5rem;
 }
 
 @keyframes shine {
@@ -1147,7 +1227,7 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 .usp__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 3rem;
+  gap: clamp(2rem, 4vw, 3rem);
   margin-top: 5rem;
   position: relative;
   z-index: 2;
@@ -1157,8 +1237,8 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 .usp__card {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px;
-  padding: 3rem 2rem;
+  border-radius: 10px;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2rem);
   backdrop-filter: blur(14px);
   box-shadow: 0 15px 40px rgba(0,0,0,0.35);
   transition: all 0.5s ease;
@@ -1174,7 +1254,7 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 
 /* ====== ICONS ====== */
 .usp__icon {
-  font-size: 2.8rem;
+  font-size: clamp(2rem, 5vw, 2.8rem);
   color: var(--accent);
   margin-bottom: 1.5rem;
   transition: transform 0.5s ease, text-shadow 0.5s ease;
@@ -1187,7 +1267,7 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 
 .usp__card h3 {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.45rem;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
   color: var(--accent);
   margin-bottom: 1rem;
   letter-spacing: 0.5px;
@@ -1195,7 +1275,7 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 
 .usp__card p {
   color: var(--gray);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
   line-height: 1.75;
 }
 
@@ -1204,7 +1284,7 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 4rem;
+  gap: clamp(2rem, 5vw, 4rem);
   margin-top: 7rem;
   border-top: 1px solid rgba(255,255,255,0.15);
   padding-top: 4rem;
@@ -1214,11 +1294,12 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 
 .stat {
   text-align: center;
+  min-width: 120px;
 }
 
 .stat__number {
   font-family: 'Oswald', sans-serif;
-  font-size: clamp(2.3rem, 5vw, 3.2rem);
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
   color: var(--accent);
   display: block;
   font-weight: 700;
@@ -1226,17 +1307,45 @@ background: linear-gradient(to bottom, #5f5f5f 0%, #6b6b6b 40%, #505050 100%);
 }
 
 .stat__label {
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 1vw, 1rem);
   color: var(--gray);
   margin-top: 0.4rem;
   display: block;
 }
 
-/* ====== RESPONSIVE ====== */
+/* ====== RESPONSIVE BREAKPOINTS ====== */
+
+/* Medium (tablets) */
+@media (max-width: 1024px) {
+  .usp__intro { margin-bottom: 4rem; }
+  .usp__grid { margin-top: 4rem; gap: 2rem; }
+  .usp__stats { margin-top: 5rem; }
+}
+
+/* Small tablets / landscape phones */
 @media (max-width: 768px) {
-  .usp-section { padding: 8rem 5%; }
+  .usp-section { padding: 6rem 5%; }
+  .usp__title { font-size: clamp(1.8rem, 4vw, 2.5rem); }
   .usp__card { padding: 2rem 1.5rem; }
-  .usp__stats { gap: 2rem; }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .usp-section { padding: 5rem 1.5rem; }
+  .usp__intro { margin-bottom: 3rem; }
+  .usp__title { font-size: 1.8rem; }
+  .usp__subtitle { font-size: 0.9rem; }
+  .usp__card { padding: 1.75rem 1.25rem; }
+  .usp__stats { flex-direction: column; gap: 1.5rem; }
+}
+
+/* Ultra-wide (4K monitors) */
+@media (min-width: 2000px) {
+  .usp-section { padding: 12rem 15%; }
+  .usp__title { font-size: 5rem; }
+  .usp__subtitle { font-size: 1.5rem; }
+  .usp__card { padding: 4rem 3rem; }
+  .stat__number { font-size: 4rem; }
 }
 
 
