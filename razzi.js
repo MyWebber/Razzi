@@ -414,3 +414,119 @@ gsap.from(".footer-bottom", {
   ease: "power3.out",
   delay: 0.3
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+ gsap.registerPlugin(ScrollTrigger);
+
+  // Staggered reveal
+  gsap.utils.toArray(".mosaic-item").forEach((item, i) => {
+    gsap.fromTo(item,
+      { opacity: 0, y: 100, scale: 0.95 },
+      {
+        opacity: 1, y: 0, scale: 1,
+        duration: 1.2,
+        delay: i * 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: item,
+          start: "top 90%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+  });
+
+  // Parallax depth voor de grote video
+  gsap.to(".mosaic-item.large video", {
+    y: -80,
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".mosaic-item.large",
+      start: "top bottom",
+      end: "bottom top",
+      scrub: 1.2,
+    }
+  });
+
+
+
+
+
+
+
+  
+
+
+document.body.classList.add("intro-lock");
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const text = "RAZZI";
+  const introText = document.querySelector(".intro-text");
+  const introLogo = document.querySelector(".intro-logo");
+  let index = 0;
+
+  /* === 1. LOGO FADE-IN + FLOAT-UP (veel smoother) === */
+  gsap.to(introLogo, {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    duration: 1.8,
+    ease: "power3.out",     // zachter en vloeiender
+  });
+
+  /* === 2. TEXT FADE-IN (super smooth swipe) === */
+  gsap.to(".intro-text", {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    duration: 1.6,
+    delay: 0.3,
+    ease: "power3.out"
+  });
+
+  /* === 3. Typewriter effect (iets vloeiender) === */
+  const typeInterval = setInterval(() => {
+    introText.textContent = text.substring(0, index);
+    index++;
+
+    if (index > text.length) {
+      clearInterval(typeInterval);
+
+      // Smooth Shine shimmer
+      gsap.to(".intro-text", {
+        backgroundPosition: "250%",
+        duration: 1.8,
+        ease: "power2.out"
+      });
+
+      // === Fade-out overlay veel smoother ===
+      gsap.to(".intro-overlay", {
+        opacity: 0,
+        scale: 1.06,                // subtiele zoom-out voor premium feel
+        duration: 1.8,
+        delay: 1.2,
+        ease: "power3.inOut",
+        onComplete: () => {
+          document.querySelector(".intro-overlay").remove();
+          document.body.classList.remove("intro-lock");
+        }
+      });
+    }
+  }, 95); // typ snelheid
+});
+
+
+
+
