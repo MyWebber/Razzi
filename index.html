@@ -47,8 +47,8 @@
 
   <!-- NAV LINKS -->
   <ul class="nav-links" id="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#diensten">Diensten</a></li>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="diensten.html">Diensten</a></li>
     <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -485,45 +485,55 @@ document.querySelectorAll(".video-card").forEach(card => {
 
 
 
-<section class="contact-section" id="contact">
-  <!-- 🔆 Achtergrond gloed en particles -->
-  <div class="contact-bg">
-    <div class="contact-particle"></div>
-    <div class="contact-particle"></div>
-    <div class="contact-particle"></div>
-  </div>
+<section class="razzi-contact-pro" id="contact">
 
-  <div class="contact-container">
-    <!-- 🔹 Linkerzijde -->
-    <div class="contact-left">
-      <span class="section-label">Neem contact op</span>
-      <h2 class="contact-title">Klaar om <span>samen</span> te werken?</h2>
-      <p class="contact-text">
-        Laten we jouw idee omzetten in een resultaat dat eruit springt.  
-        Vul het formulier in of stuur ons direct een bericht.
+  <!-- Background Layers -->
+  <div class="rcp-bg-glow"></div>
+  <div class="rcp-bg-line"></div>
+
+  <div class="rcp-inner">
+
+    <!-- LEFT: TEXT BLOCK -->
+    <div class="rcp-left">
+      <h2 class="rcp-title">
+        Laat je merk <span>groeien</span> met echte impact.
+      </h2>
+
+      <p class="rcp-subtext">
+        Stuur ons je idee — wij maken er premium content van die blijft hangen.  
+        Razzi combineert creativiteit, strategie en psychologie om jouw merk te versterken.
       </p>
 
-      <div class="contact-details">
-        📞 <a href="tel:+31612345678">+31 6 12 34 56 78</a><br>
-        ✉️ <a href="mailto:info@mywebber.nl">info@voorbeeld.nl</a><br>
-        🌐 <a href="https://www.mywebber.nl" target="_blank">www.vooreeld.nl</a>
+      <div class="rcp-highlights">
+        <span>⚡ Snelle oplevering</span>
+        <span>🎥 High-end productie</span>
+        <span>📈 Strategische aanpak</span>
       </div>
+
+      <a href="#contact" class="btn btn-primary rcp-cta">Neem contact op</a>
     </div>
 
-    <!-- 🔹 Rechterzijde -->
-    <form class="contact-form" action="https://formspree.io/f/maygkzwq" method="POST">
-      <div class="form-group">
+    <!-- RIGHT: FLOATING FORM CARD -->
+    <form class="rcp-card" action="https://formspree.io/f/maygkzwq" method="POST">
+      <h3>Stuur ons een bericht</h3>
+
+      <div class="rcp-group">
         <input type="text" name="name" placeholder="Naam" required />
       </div>
-      <div class="form-group">
+
+      <div class="rcp-group">
         <input type="email" name="email" placeholder="E-mailadres" required />
       </div>
-      <div class="form-group">
-        <textarea name="message" rows="5" placeholder="Bericht..." required></textarea>
+
+      <div class="rcp-group">
+        <textarea name="message" rows="4" placeholder="Jouw bericht..." required></textarea>
       </div>
-      <button type="submit" class="cta-btn">Verstuur Bericht</button>
+
+      <button type="submit" class="btn btn-primary">Verstuur</button>
     </form>
+
   </div>
+
 </section>
 
 
@@ -548,8 +558,8 @@ document.querySelectorAll(".video-card").forEach(card => {
     <div class="footer-col links">
       <h4>Navigatie</h4>
       <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#diensten">Diensten</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="diensten.html">Diensten</a></li>
         <li><a href="#projecten">Projecten</a></li>
         <li><a href="#over">Over ons</a></li>
         <li><a href="#contact">Contact</a></li>
