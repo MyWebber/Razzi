@@ -3,175 +3,135 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RAZZI</title>
 
-  <!-- Fonts -->
+  <!-- SEO TITEL -->
+  <title>RAZZI – Strategische Videografie & Premium Content Producties</title>
+
+  <!-- META SEO -->
+  <meta name="description" content="RAZZI creëert high-end videografie, editing en organische marketingstrategieën die jouw merk laten domineren op social media – zonder advertenties.">
+  <meta name="keywords" content="videografie, editing, content creatie, razzi, social media groei, marketing, premium video, high end videoproductie">
+  <meta name="author" content="Razzi Media">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.yourwebsite.com/">
+
+  <!-- OPEN GRAPH -->
+  <meta property="og:title" content="RAZZI – High-end Videografie & Content Productie">
+  <meta property="og:description" content="Premium storytelling, cinematografie en organische groei voor merken die willen domineren.">
+  <meta property="og:image" content="razzi-cover.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- FONTS -->
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://kit.fontawesome.com/a2d9a6d6e6.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<link rel="stylesheet" href="razzi.css">
+  <!-- ICONS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
- 
+  <!-- GSAP (SCHOON) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
+  <!-- CSS -->
+  <link rel="stylesheet" href="razzi.css">
 </head>
+
 <body>
-<!-- NAV -->
-
-
-<div class="intro-overlay">
-  <div class="intro-content">
-    <img src="razzi logo.png" alt="Razzi Logo" class="intro-logo">
-    <div class="intro-text"></div>
-  </div>
-</div>
-
-
-
-<nav class="main-nav">
-  <!-- LOGO -->
-  <div class="logo">
-    <img src="razzi logo.png" alt="Ali Media Logo">
+  
+  <!-- INTRO OVERLAY -->
+  <div class="intro-overlay" aria-hidden="true">
+    <div class="intro-content">
+      <img src="razzi logo.png" alt="Razzi Logo" class="intro-logo" />
+      <div class="intro-text"></div>
+    </div>
   </div>
 
-  <!-- HAMBURGER (mobiel) -->
-  <div class="burger" id="burger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  <!-- NAVIGATIE -->
+  <nav class="main-nav" aria-label="Hoofdmenu">
+    <div class="logo">
+      <img src="razzi logo.png" alt="Razzi Logo" />
+    </div>
 
-  <!-- NAV LINKS -->
-  <ul class="nav-links" id="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="diensten.html">Diensten</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+    <button class="burger" id="burger" aria-label="Menu openen / sluiten">
+      <span></span><span></span><span></span>
+    </button>
 
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="diensten.html">Diensten</a></li>
+      <li><a href="#portfolio">Projecten</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
+  <script>
+    const burger = document.getElementById("burger");
+    const nav = document.getElementById("nav-links");
 
-<script>
-  const burger = document.getElementById("burger");
-  const nav = document.getElementById("nav-links");
-
-  burger.addEventListener("click", () => {
-    burger.classList.toggle("active");
-    nav.classList.toggle("active");
-  });
-
-  // Sluit menu na klik op link
-  document.querySelectorAll(".nav-links a").forEach(link => {
-    link.addEventListener("click", () => {
-      burger.classList.remove("active");
-      nav.classList.remove("active");
+    burger.addEventListener("click", () => {
+      burger.classList.toggle("active");
+      nav.classList.toggle("active");
     });
-  });
-</script>
 
-
-
-
-
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => {
+        burger.classList.remove("active");
+        nav.classList.remove("active");
+      });
+    });
+  </script>
 
   <!-- HERO -->
-  <header class="hero">
+  <header class="hero" id="home">
     <canvas id="interactive-bg"></canvas>
 
     <div class="hero-inner">
       <div class="hero-content">
-        <h1>Strategische Videografie die Resultaat Levert</h1>
-        <p>Wij combineren cinematografische storytelling met organische marketing om jouw merk zichtbaar te maken op elk platform, zonder betaalde ads.</p>
+        <h1>Strategische Videografie die resultaat levert</h1>
+        <p>Wij combineren cinematografische storytelling met organische marketing om jouw merk zichtbaar te maken zonder advertenties.</p>
 
         <div class="usp-list">
-          <span class="usp">Cinematische Kwaliteit</span>
-          <span class="usp">Organische Groei</span>
+          <span class="usp">Cinematische kwaliteit</span>
+          <span class="usp">Organische groei</span>
         </div>
 
         <div class="cta-buttons">
-          <button class="btn btn-primary">Plan een gesprek</button>
-          <button class="btn btn-outline">Bekijk portfolio</button>
+          <a href="#contact" class="btn btn-primary">Plan een gesprek</a>
+          <a href="#portfolio" class="btn btn-outline">Bekijk portfolio</a>
         </div>
       </div>
 
       <div class="hero-visual">
-        <div class="floating-circle" aria-hidden="true"></div>
+        <div class="floating-circle"></div>
       </div>
     </div>
   </header>
 
-
-
-
-<section class="company-intro">
-  <div class="intro-bg">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-  </div>
-
-  <div class="intro-container">
-    <div class="intro-left">
-      <h2 class="intro-title">
-        Wij transformeren <span>ideeën</span> naar <span>digitale impact</span>
-      </h2>
-      <p class="intro-subtext">
-        Strategie, script en apparatuur komen samen om merken te versterken.  
-        Elke frame en elk detail is bedacht met precisie.
-      </p>
-      <a href="#contact" class="intro-btn">Ontdek onze aanpak</a>
-    </div>
-
-    <div class="intro-right">
-      <div class="intro-card">
-        <img src="razzi foto.jpg" alt="Project voorbeeld">
-        <div class="card-overlay"></div>
+  <!-- INTRODUCTIE -->
+  <section class="company-intro">
+    <div class="intro-container">
+      <div class="intro-left">
+        <h2 class="intro-title">Wij transformeren <span>ideeën</span> naar <span>digitale impact</span></h2>
+        <p class="intro-subtext">Strategie, script en apparatuur komen samen om merken te versterken. Elke frame is bedacht met precisie.</p>
+        <a href="#contact" class="intro-btn btn-primary">Ontdek onze aanpak</a>
       </div>
+      <div class="intro-card">
+  <img src="razzi foto.jpg" alt="Razzi Project" loading="lazy">
+  <div class="card-overlay"></div>
+</div>
+
     </div>
-  </div>
-</section>
+  </section>
 
+  <!-- PARTNERS -->
+  <section class="partners" id="partners">
+    <div class="partners-header">
+      <span class="section-label">Vertrouwd door</span>
+      <h2>Bedrijven waar wij mee samenwerken</h2>
+    </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- SECTIE 3: Partners / Logos -->
-<section class="partners">
-  <div class="partner-spark"></div>
-<div class="partner-spark"></div>
-<div class="partner-spark"></div>
-
-  <div class="partners-header">
-    <span class="section-label">Vertrouwd door</span>
-    <h2>Bedrijven waar wij mee samenwerken</h2>
-  </div>
-
-  <div class="logo-slider">
-    <div class="logo-track">
-            <img src="hcg logo.png" alt="Apple" />
+    <div class="logo-slider">
+      <div class="logo-track">
+        <!-- optimized lazy loading -->
+ <img src="hcg logo.png" alt="Apple" />
             <img src="Andy logo.png" alt="Spotify" />
             <img src="kbg logo.png" alt="Microsoft" />
             <img src="fa-logo-PA-B.svg" alt="Coca Cola" />
@@ -197,402 +157,181 @@
             <img src="barbershop fuego.png" alt="Spotify" />
             <img src="zasushi logo.png" alt="Spotify" />
 
+        <!-- duplicated for loop -->
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <!-- POWER SECTION -->
+  <section class="power-section" id="power-section">
+    <div class="power-container">
+      <div class="left-intro">
+        <span class="section-label">De kracht van content</span>
+        <h2 class="intro-title">Van aandacht naar <span>invloed</span></h2>
+      </div>
 
+      <div class="center-divider"></div>
 
-<section class="power-section" id="power-section">
-  <div class="motion-bg"><div class="power-orb"></div></div>
+      <div class="right-text">
+        <p class="lead"><strong>Social media is geen podium, maar een gesprek.</strong></p>
+        <p>Wij creëren content die niet alleen gezien wordt, maar gevoeld wordt.</p>
+        <p>Elke seconde vertelt iets over je merk. Onze taak? Zorgen dat dat blijft hangen.</p>
 
-  <div class="power-container">
-    <div class="left-intro">
-      <span class="section-label">De kracht van content</span>
-      <h2 class="intro-title">
-        Van aandacht<br>
-        naar <span>invloed</span>.
-      </h2>
+        <div class="cta-box">
+          <a href="#contact" class="cta-btn btn-primary">Ontdek onze aanpak</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT MOSAIC -->
+  <section class="projects-showcase" id="portfolio">
+
+    <div class="showcase-header">
+      <h2 class="showcase-title">Fractie van onze <span>Projecten</span></h2>
+      <p class="showcase-subtitle">Waar creativiteit, design en technologie samensmelten tot een visueel verhaal.</p>
     </div>
 
-    <div class="center-divider"></div>
+    <div class="mosaic-grid">
+      <div class="mosaic-item large from-left">
+        <video autoplay muted loop playsinline preload="metadata" loading="lazy">
+          <source src="ScreenRecording_11-10-2025 11-06-48_1.mp4" type="video/mp4">
+        </video>
+      </div>
 
-    <div class="right-text">
-      <p class="lead">
-       
-        <strong>social media is geen podium, maar een gesprek.</strong>
+      <div class="mosaic-item medium from-top">
+        <video autoplay muted loop playsinline preload="metadata" loading="lazy">
+          <source src="ScreenRecording_11-10-2025 10-56-58_1.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="mosaic-item small from-bottom">
+        <video autoplay muted loop playsinline preload="metadata" loading="lazy">
+          <source src="ScreenRecording_11-10-2025 10-56-58_1.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="mosaic-item small from-right">
+        <video autoplay muted loop playsinline preload="metadata" loading="lazy">
+          <source src="ScreenRecording_11-10-2025 10-56-58_1.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- USP / STATISTIEKEN -->
+  <section class="usp-section" id="why-us">
+    <div class="usp__intro">
+      <h2 class="usp__title">Waarom bedrijven <span>voor ons kiezen</span></h2>
+      <p class="usp__subtitle">Strategie, design en technologie – perfect gecombineerd.</p>
+    </div>
+
+    <div class="usp__grid">
+      <div class="usp__card">
+        <div class="usp__icon"><i class="fas fa-bolt"></i></div>
+        <h3>Snelle realisatie</h3>
+        <p>Campagnes klaar binnen weken, zonder kwaliteitsverlies.</p>
+      </div>
+
+      <div class="usp__card">
+        <div class="usp__icon"><i class="fas fa-crown"></i></div>
+        <h3>Premium uitstraling</h3>
+        <p>Wij filmen met aandacht voor detail voor een luxe uitstraling.</p>
+      </div>
+
+      <div class="usp__card">
+        <div class="usp__icon"><i class="fas fa-chart-line"></i></div>
+        <h3>Meetbaar resultaat</h3>
+        <p>Analyse, testing en optimalisatie voor groei die zichtbaar is.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="razzi-contact-pro" id="contact">
+
+    <div class="rcp-bg-glow"></div>
+    <div class="rcp-bg-line"></div>
+
+    <div class="rcp-inner">
+      <div class="rcp-left">
+        <h2 class="rcp-title">Laat je merk <span>groeien</span> met echte impact</h2>
+        <p class="rcp-subtext">Stuur ons je idee — wij maken er premium content van.</p>
+
+        <div class="rcp-highlights">
+          <span>⚡ Snelle oplevering</span>
+          <span>🎥 High-end productie</span>
+          <span>📈 Strategische aanpak</span>
+        </div>
+
+        <a href="#contact" class="btn btn-primary">Neem contact op</a>
+      </div>
+
+      <form class="rcp-card" action="https://formspree.io/f/maygkzwq" method="POST">
+        <h3>Stuur ons een bericht</h3>
+
+        <div class="rcp-group">
+          <input type="text" name="name" placeholder="Naam" required>
+        </div>
+
+        <div class="rcp-group">
+          <input type="email" name="email" placeholder="E-mailadres" required>
+        </div>
+
+        <div class="rcp-group">
+          <textarea name="message" rows="4" placeholder="Jouw bericht..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Verstuur</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer-modern">
+    <div class="footer-inner">
+
+      <div class="footer-col brand">
+        <img src="razzi logo.png" alt="RAZZI" class="footer-logo"/>
+        <p class="tagline">Strategische videografie die resultaat levert</p>
+      </div>
+
+      <div class="footer-col links">
+        <h4>Navigatie</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="diensten.html">Diensten</a></li>
+          <li><a href="#portfolio">Projecten</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col contact">
+        <h4>Contact</h4>
+        <p><a >info@voorbeeld.nl</a></p>
+        <p><a >+31 6 12 34 56 78</a></p>
+        <div class="socials">
+          <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> RAZZI — Built by 
+        <a href="https://www.my-webber.com" target="_blank">
+          <img src="MYWEBBER WIT.png" alt="MyWebber" class="footer-logo-mini">
+        </a>
       </p>
-      <p>
-        Wij creëren content die niet alleen gezien wordt, maar 
-        <span class="highlight">gevoeld</span> wordt visueel, strategisch 
-        en met een ritme dat aansluit op de flow van het algoritme.
-      </p>
-      <p>
-        Elke video, elke post en elke seconde vertelt iets over je merk. 
-        Onze taak? Zorgen dat dat verhaal blijft hangen.
-      </p>
-
-      <div class="cta-box">
-        <a href="#" class="cta-btn">Ontdek onze aanpak</a>
-      </div>
     </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-<section class="projects-showcase">
-  <div class="showcase-header">
-    <h2 class="showcase-title">Fractie Van Onze <span>Projecten</span></h2>
-    <p class="showcase-subtitle">
-      Waar <span>creativiteit</span>, <span>design</span> en <span>technologie</span> samensmelten tot een visueel verhaal.
-    </p>
-  </div>
-
-  <div class="mosaic-grid">
-    <!-- Large Hero Video -->
-    <div class="mosaic-item large from-left">
-      <video src="ScreenRecording_11-10-2025 11-06-48_1.mp4" autoplay muted loop playsinline disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"></video>
-      <div class="overlay"><h3>Signature Story</h3></div>
-    </div>
-
-    <!-- Top-right smaller -->
-    <div class="mosaic-item medium from-top">
-      <video src="ScreenRecording_11-10-2025 10-56-58_1.mp4" autoplay muted loop playsinline disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"></video>
-      <div class="overlay"><h3>Creative Shot</h3></div>
-    </div>
-
-    <!-- Bottom-left -->
-    <div class="mosaic-item small from-bottom">
-      <video src="ScreenRecording_11-10-2025 11-01-30_1.mp4" autoplay muted loop playsinline disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"></video>
-      <div class="overlay"><h3>Studio Visuals</h3></div>
-    </div>
-
-    <!-- Bottom-right -->
-    <div class="mosaic-item small from-right">
-      <video src="ScreenRecording_11-10-2025 11-07-50.mp4" autoplay muted loop playsinline disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"></video>
-      <div class="overlay"><h3>Motion Clip</h3></div>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-<!-- GSAP -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-
-<script>
-gsap.registerPlugin(ScrollTrigger);
-
-// Animate the entire grid when it enters viewport
-gsap.from(".showcase-title, .showcase-subtitle", {
-  opacity: 0,
-  y: 60,
-  duration: 1.2,
-  ease: "power3.out",
-  stagger: 0.2,
-  scrollTrigger: {
-    trigger: ".projects-showcase",
-    start: "top 80%",
-  }
-});
-
-// Animate the video cards individually
-gsap.utils.toArray(".video-card").forEach((card, i) => {
-  const direction = card.classList.contains("tilt-left") ? -120 :
-                    card.classList.contains("tilt-right") ? 120 : 0;
-  const zDepth = card.classList.contains("tilt-center") ? 150 : 0;
-
-  gsap.fromTo(card,
-    { 
-      opacity: 0,
-      x: direction,
-      y: 100,
-      rotateY: direction > 0 ? 8 : direction < 0 ? -8 : 0,
-      z: -zDepth
-    },
-    {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      rotateY: 0,
-      z: 0,
-      duration: 1.3,
-      delay: i * 0.2,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: card,
-        start: "top 85%",
-        toggleActions: "play none none reverse"
-      }
-    }
-  );
-});
-
-// Subtle hover parallax lift
-document.querySelectorAll(".video-card").forEach(card => {
-  card.addEventListener("mousemove", e => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const moveX = (x - rect.width / 2) / 20;
-    const moveY = (y - rect.height / 2) / 20;
-
-    gsap.to(card, {
-      rotateY: moveX,
-      rotateX: -moveY,
-      duration: 0.6,
-      ease: "power2.out"
-    });
-  });
-
-  card.addEventListener("mouseleave", () => {
-    gsap.to(card, {
-      rotateY: 0,
-      rotateX: 0,
-      duration: 0.8,
-      ease: "power2.out"
-    });
-  });
-});
-</script>
-
-
-
-
-
-
-
-
-
-
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-
-
-
-
-<section class="usp-section" id="why-us">
-  <div class="usp__intro">
-    <h2 class="usp__title">Waarom bedrijven <span>voor ons kiezen</span></h2>
-    <p class="usp__subtitle">
-      Wij combineren strategie, design en technologie om merken te helpen groeien met meetbare resultaten en een blijvende indruk.
-    </p>
-  </div>
-
-  <div class="usp__grid">
-    <div class="usp__card">
-      <div class="usp__icon"><i class="fas fa-bolt"></i></div>
-      <h3>Snelle realisatie</h3>
-      <p>Wij leveren campagnes binnen enkele weken, zonder in te boeten op kwaliteit.</p>
-    </div>
-
-    <div class="usp__card">
-      <div class="usp__icon"><i class="fas fa-crown"></i></div>
-      <h3>Premium uitstraling</h3>
-      <p>Wij filmen met aandacht voor detail zodat jouw merk luxe en vertrouwen uitstraalt.</p>
-    </div>
-
-    <div class="usp__card">
-      <div class="usp__icon"><i class="fas fa-chart-line"></i></div>
-      <h3>Meetbaar resultaat</h3>
-      <p>We analyseren, testen en optimaliseren om groei te realiseren die zichtbaar is in cijfers.</p>
-    </div>
-  </div>
-
-  <div class="usp__stats">
-    <div class="stat">
-      <span class="stat__number" data-target="120">0</span>
-      <span class="stat__label">Projecten afgerond</span>
-    </div>
-    <div class="stat">
-      <span class="stat__number" data-target="45">0</span>
-      <span class="stat__label">Tevreden klanten</span>
-    </div>
-    <div class="stat">
-      <span class="stat__number" data-target="8">0</span>
-      <span class="stat__label">Jaren ervaring</span>
-    </div>
-    <div class="stat">
-      <span class="stat__number" data-target="98">0</span>
-      <span class="stat__label">% Klanttevredenheid</span>
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-<section class="approach-section" id="approach">
-  <div class="motion-bg">
-    <div class="power-orb"></div>
-  </div>
-
-  <div class="approach-container">
-    <!-- LINKERKANT -->
-    <div class="approach-left">
-      <span class="section-label">Onze werkwijze</span>
-      <h2 class="intro-title">Onze <span>Aanpak</span></h2>
-      <p class="lead">We combineren strategie, script en apparatuur om jouw merk te laten groeien, stap voor stap.</p>
-    </div>
-
-
-    <!-- SCHEIDING -->
-    <div class="center-divider"></div>
-
-    <!-- RECHTERKANT -->
-    <div class="approach-right">
-      <div class="step">
-        <h3><span>1.</span> Strategie & Concept</h3>
-        <p>We leren jouw merk en doelen kennen en bouwen een plan dat écht werkt.</p>
-      </div>
-      <div class="step">
-        <h3><span>2.</span> Design & Beleving</h3>
-        <p>We vertalen jouw verhaal naar een krachtig, opvallend en modern design.</p>
-      </div>
-      <div class="step">
-        <h3><span>3.</span> Ontwikkeling</h3>
-        <p>Pixel-perfect, snel en volledig responsive op elk apparaat.</p>
-      </div>
-      <div class="step">
-        <h3><span>4.</span> Groei & Optimalisatie</h3>
-        <p>Na de lancering blijven we meten, verbeteren en laten we jouw merk groeien.</p>
-      </div>
-
-      <div class="cta-box">
-        <a href="#contact" class="cta-btn">Plan een kennismaking</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-
-<section class="razzi-contact-pro" id="contact">
-
-  <!-- Background Layers -->
-  <div class="rcp-bg-glow"></div>
-  <div class="rcp-bg-line"></div>
-
-  <div class="rcp-inner">
-
-    <!-- LEFT: TEXT BLOCK -->
-    <div class="rcp-left">
-      <h2 class="rcp-title">
-        Laat je merk <span>groeien</span> met echte impact.
-      </h2>
-
-      <p class="rcp-subtext">
-        Stuur ons je idee — wij maken er premium content van die blijft hangen.  
-        Razzi combineert creativiteit, strategie en psychologie om jouw merk te versterken.
-      </p>
-
-      <div class="rcp-highlights">
-        <span>⚡ Snelle oplevering</span>
-        <span>🎥 High-end productie</span>
-        <span>📈 Strategische aanpak</span>
-      </div>
-
-      <a href="#contact" class="btn btn-primary rcp-cta">Neem contact op</a>
-    </div>
-
-    <!-- RIGHT: FLOATING FORM CARD -->
-    <form class="rcp-card" action="https://formspree.io/f/maygkzwq" method="POST">
-      <h3>Stuur ons een bericht</h3>
-
-      <div class="rcp-group">
-        <input type="text" name="name" placeholder="Naam" required />
-      </div>
-
-      <div class="rcp-group">
-        <input type="email" name="email" placeholder="E-mailadres" required />
-      </div>
-
-      <div class="rcp-group">
-        <textarea name="message" rows="4" placeholder="Jouw bericht..." required></textarea>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Verstuur</button>
-    </form>
-
-  </div>
-
-</section>
-
-
-
-
-
-
-<footer class="footer-modern">
-  <div class="footer-glow"></div>
-  <div class="footer-particle"></div>
-  <div class="footer-particle"></div>
-  <div class="footer-particle"></div>
-
-  <div class="footer-inner">
-    <!-- 1️⃣ Branding -->
-    <div class="footer-col brand">
-      <img src="razzi logo.png" alt="MyWebber" class="footer-logo" />
-      <p class="tagline">Strategische Videografie die Resultaat Levert</p>
-    </div>
-
-    <!-- 2️⃣ Links -->
-    <div class="footer-col links">
-      <h4>Navigatie</h4>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="diensten.html">Diensten</a></li>
-        <li><a href="#projecten">Projecten</a></li>
-        <li><a href="#over">Over ons</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-
-    <!-- 3️⃣ Contact -->
-    <div class="footer-col contact">
-      <h4>Contact</h4>
-      <p><a>info@voorbeeld.nl</a></p>
-      <p><a >+31 6 12 34 56 78</a></p>
-      <div class="socials">
-        <a href="https://wa.me/31612345678" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://www.snapchat.com/add/mywebber" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
-        <a href="https://www.instagram.com/mywebber" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-<p>© <span id="year"></span> RAZZI — Built by 
-  <a href="https://www.my-webber.com" target="_blank" rel="noopener noreferrer">
-    <img src="MYWEBBER WIT.png" alt="MyWebber Logo" class="footer-logo">
-  </a>
-</p>
-
-  </div>
-</footer>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-
-
- <script src="razzi.js"></script>
-
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+  <script src="razzi.js" defer></script>
+</body>
+</html>

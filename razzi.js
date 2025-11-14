@@ -1,4 +1,55 @@
+// ================================
+// GSAP + ScrollTrigger registratie
+// ================================
+gsap.registerPlugin(ScrollTrigger);
 
+
+// ================================
+// 1. INTRO OVERLAY ANIMATIE
+// ================================
+const introTl = gsap.timeline();
+
+// Text + logo animatie
+introTl
+  .to(".intro-text", {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    duration: 1.1,
+    ease: "power3.out",
+  })
+  .to(".intro-logo", {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "drop-shadow(0 0 30px rgba(255,234,50,0.3))",
+    duration: 1,
+    ease: "power3.out",
+  }, "-=0.6")
+  .to(".intro-overlay", {
+    opacity: 0,
+    pointerEvents: "none",
+    duration: 1,
+    ease: "power2.inOut",
+    onComplete: () => {
+      document.querySelector(".intro-overlay").remove();
+      document.body.classList.remove("intro-lock");
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
+// ================================
+// 1. HERO ANIMATIE
+// ================================
 document.addEventListener("DOMContentLoaded", () => {
   // ===== Register once
   if (!gsap.core.globals().ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
@@ -47,72 +98,46 @@ document.addEventListener("DOMContentLoaded", () => {
     (function loop(){ ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.step(); p.draw();}); connect(); requestAnimationFrame(loop); })();
   }
 
-  // ====== 1) Hero (scoped)
-  const hero = $(".hero");
-  if (hero) {
-    gsap.context(() => {
-      gsap.from(".hero-content h1",{y:80,opacity:0,duration:1,ease:"power3.out"});
-      gsap.from(".hero-content p",{y:50,opacity:0,delay:.1,duration:.8,ease:"power3.out"});
-      gsap.from(".usp",{opacity:0,y:20,stagger:.1,delay:.25,duration:.5});
-      gsap.from(".cta-buttons",{opacity:0,y:24,delay:.35,duration:.5});
-      gsap.to(".hero",{
-        scrollTrigger:{trigger:".hero",start:"bottom bottom",scrub:true},
-        opacity:0.6,ease:"power1.inOut"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const introSection = document.querySelector(".company-intro");
+  if (!introSection) return;
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          introSection.classList.add("in-view");
+          io.unobserve(introSection); // maar één keer afspelen
+        }
       });
-    }, hero);
-  }
+    },
+    { threshold: 0.25 }
+  );
 
-  // ====== 2) Services (cards)
-  const services = $$(".service");
-  if (services.length) {
-    services.forEach((el,i)=>{
-      gsap.to(el,{
-        scrollTrigger:{trigger:el,start:"top 85%"},
-        opacity:1,y:0,duration:.7,delay:i*0.08,ease:"power2.out"
-      });
-    });
-  }
-
-  // ====== 3) About (scoped)
-  const about = $(".about");
-  if (about) {
-    gsap.context(()=>{
-      gsap.from(".about-text h2",{scrollTrigger:{trigger:about,start:"top 85%"}, y:50,opacity:0,duration:1,ease:"power3.out"});
-      gsap.from($$(".about-text p"),{scrollTrigger:{trigger:about,start:"top 80%"}, y:40,opacity:0,stagger:.15,duration:.8,ease:"power3.out"});
-      gsap.from(".stat",{scrollTrigger:{trigger:about,start:"top 78%"}, y:30,opacity:0,stagger:.12,duration:.7});
-      gsap.from(".about-visual",{scrollTrigger:{trigger:about,start:"top 85%"}, x:80,opacity:0,duration:1});
-    }, about);
-  }
-
-
-gsap.registerPlugin(ScrollTrigger);
-
-gsap.from(".intro-left",{
-  scrollTrigger:{trigger:".company-intro",start:"top 80%"},
-  x:-100,opacity:0,duration:1.2,ease:"power3.out"
-});
-
-gsap.from(".intro-card",{
-  scrollTrigger:{trigger:".company-intro",start:"top 80%"},
-  x:100,opacity:0,duration:1.2,ease:"power3.out"
+  io.observe(introSection);
 });
 
 
 
-  // ====== 5) Reels (IntersectionObserver, no GSAP)
-  const reelCards = $$(".reel");
-  if (reelCards.length){
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        const el = entry.target; const vid = el.querySelector('video');
-        if(entry.isIntersecting){
-          el.classList.add('in');
-          if(vid && vid.paused){ vid.play().catch(()=>{}); }
-        }else{ if(vid && !vid.paused){ vid.pause(); } }
-      });
-    }, {threshold:0.22});
-    reelCards.forEach(c=>io.observe(c));
-  }
+
+
+
 
   // ====== 6) Power-section (scoped & unique classes)
   const power = $("#power-section");
@@ -125,6 +150,12 @@ gsap.from(".intro-card",{
         .to("#power-section .power-cta",{ opacity:1, y:0, duration:.9, ease:"back.out(1.6)" },"-=0.2");
     }, power);
   }
+
+
+
+
+
+
 
   // ====== 7) Glow follow (guarded)
   const glow = $(".glow-overlay");
@@ -422,111 +453,67 @@ gsap.from(".footer-bottom", {
 
 
 
+gsap.registerPlugin(ScrollTrigger);
 
+// Reset CSS blokkades
+gsap.set(".mosaic-item", {
+  opacity: 1,
+  x: 0,
+  y: 0,
+  scale: 1
+});
 
+// ULTRA SNELLE SLIDE-IN
+gsap.utils.toArray(".mosaic-item").forEach((item, i) => {
 
+  const directions = [
+    { x: -30, y: 0 }, // van links
+    { x: 30, y: 0 },  // van rechts
+    { x: 0, y: -30 }, // van boven
+    { x: 0, y: 30 },  // van onder
+  ];
 
+  const dir = directions[i % directions.length];
 
- gsap.registerPlugin(ScrollTrigger);
-
-  // Staggered reveal
-  gsap.utils.toArray(".mosaic-item").forEach((item, i) => {
-    gsap.fromTo(item,
-      { opacity: 0, y: 100, scale: 0.95 },
-      {
-        opacity: 1, y: 0, scale: 1,
-        duration: 1.2,
-        delay: i * 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: item,
-          start: "top 90%",
-          toggleActions: "play none none reverse"
-        }
-      }
-    );
-  });
-
-  // Parallax depth voor de grote video
-  gsap.to(".mosaic-item.large video", {
-    y: -80,
-    ease: "none",
+  gsap.from(item, {
+    opacity: 0,
+    x: dir.x,
+    y: dir.y,
+    duration: 0.35, // SNEL
+    ease: "power1.out", // SNEL
     scrollTrigger: {
-      trigger: ".mosaic-item.large",
-      start: "top bottom",
-      end: "bottom top",
-      scrub: 1.2,
+      trigger: item,
+      start: "top 92%",
+      toggleActions: "play none none reverse"
     }
   });
 
-
-
-
-
-
-
-  
-
-
-document.body.classList.add("intro-lock");
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const text = "RAZZI";
-  const introText = document.querySelector(".intro-text");
-  const introLogo = document.querySelector(".intro-logo");
-  let index = 0;
-
-  /* === 1. LOGO FADE-IN + FLOAT-UP (veel smoother) === */
-  gsap.to(introLogo, {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    duration: 1.8,
-    ease: "power3.out",     // zachter en vloeiender
-  });
-
-  /* === 2. TEXT FADE-IN (super smooth swipe) === */
-  gsap.to(".intro-text", {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    duration: 1.6,
-    delay: 0.3,
-    ease: "power3.out"
-  });
-
-  /* === 3. Typewriter effect (iets vloeiender) === */
-  const typeInterval = setInterval(() => {
-    introText.textContent = text.substring(0, index);
-    index++;
-
-    if (index > text.length) {
-      clearInterval(typeInterval);
-
-      // Smooth Shine shimmer
-      gsap.to(".intro-text", {
-        backgroundPosition: "250%",
-        duration: 1.8,
-        ease: "power2.out"
-      });
-
-      // === Fade-out overlay veel smoother ===
-      gsap.to(".intro-overlay", {
-        opacity: 0,
-        scale: 1.06,                // subtiele zoom-out voor premium feel
-        duration: 1.8,
-        delay: 1.2,
-        ease: "power3.inOut",
-        onComplete: () => {
-          document.querySelector(".intro-overlay").remove();
-          document.body.classList.remove("intro-lock");
-        }
-      });
-    }
-  }, 95); // typ snelheid
 });
 
 
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const vids = document.querySelectorAll("video");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.play();
+      } else {
+        entry.target.pause();
+      }
+    })
+  }, { threshold: 0.4 });
+
+  vids.forEach(v => observer.observe(v));
+});
 
 
