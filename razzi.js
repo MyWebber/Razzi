@@ -1,519 +1,295 @@
-// ================================
-// GSAP + ScrollTrigger registratie
-// ================================
-gsap.registerPlugin(ScrollTrigger);
+﻿/**
+ * RAZZI — razzi.js
+ * Next-level: custom cursor · navbar · hero canvas · reveal · counters · magnetic
+ */
 
+/* ═══════════════════════════════════════
+   1. CUSTOM CURSOR
+═══════════════════════════════════════ */
+(function () {
+  const cursor = document.getElementById("rCursor");
+  const dot    = document.getElementById("rDot");
+  if (!cursor || !dot) return;
 
-// ================================
-// 1. INTRO OVERLAY ANIMATIE
-// ================================
-const introTl = gsap.timeline();
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+  let cx = mx, cy = my;
 
-// Text + logo animatie
-introTl
-  .to(".intro-text", {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    duration: 1.1,
-    ease: "power3.out",
-  })
-  .to(".intro-logo", {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    filter: "drop-shadow(0 0 30px rgba(255,234,50,0.3))",
-    duration: 1,
-    ease: "power3.out",
-  }, "-=0.6")
-  .to(".intro-overlay", {
-    opacity: 0,
-    pointerEvents: "none",
-    duration: 1,
-    ease: "power2.inOut",
-    onComplete: () => {
-      document.querySelector(".intro-overlay").remove();
-      document.body.classList.remove("intro-lock");
-    }
+  document.addEventListener("mousemove", (e) => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + "px";
+    dot.style.top  = my + "px";
+  }, { passive: true });
+
+  // Smooth lag for ring cursor
+  (function lerp() {
+    cx += (mx - cx) * 0.12;
+    cy += (my - cy) * 0.12;
+    cursor.style.left = cx + "px";
+    cursor.style.top  = cy + "px";
+    requestAnimationFrame(lerp);
+  })();
+
+  // Hover grow on interactive elements
+  const hoverEls = "a,button,[data-magnetic]";
+  document.addEventListener("mouseover", (e) => {
+    if (e.target.closest(hoverEls)) cursor.classList.add("r-cursor--hover");
   });
+  document.addEventListener("mouseout", (e) => {
+    if (e.target.closest(hoverEls)) cursor.classList.remove("r-cursor--hover");
+  });
+})();
 
 
+/* ═══════════════════════════════════════
+   2. DOT NAV — actieve sectie bij scrollen
+═══════════════════════════════════════ */
+(function () {
+  const items      = document.querySelectorAll(".rz-dot-nav__item");
+  const sectionIds = ["home", "diensten", "portfolio", "contact"];
+  const sections   = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+  if (!items.length || !sections.length) return;
 
+  let current = "";
 
+  const setActive = (id) => {
+    if (id === current) return;
+    current = id;
+    items.forEach(item => {
+      item.classList.toggle("rz-dot-nav__item--active", item.dataset.section === id);
+    });
+  };
 
+  const update = () => {
+    // Triggerlijn: 35% van boven in het scherm
+    const trigger = window.innerHeight * 0.35;
+    let activeId  = sections[0].id;
 
-
-
-
-
-
-// ================================
-// 1. HERO ANIMATIE
-// ================================
-document.addEventListener("DOMContentLoaded", () => {
-  // ===== Register once
-  if (!gsap.core.globals().ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-
-  // ===== Utility: safe query & mm for reduced motion
-  const $ = sel => document.querySelector(sel);
-  const $$ = sel => Array.from(document.querySelectorAll(sel));
-  const mm = gsap.matchMedia();
-
-  // ====== 0) Particle BG (safe)
-  const canvas = document.getElementById('interactive-bg');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    const COUNT = 80, LINK_DIST = 120, COLOR = '255,234,50';
-    let mouse = {x:null,y:null};
-
-    const sizeCanvas = () => { canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight; };
-    addEventListener('resize', sizeCanvas, {passive:true}); sizeCanvas();
-    addEventListener('mousemove', e => { mouse.x=e.clientX; mouse.y=e.clientY; }, {passive:true});
-
-    class Particle{
-      constructor(){ this.x=Math.random()*canvas.width; this.y=Math.random()*canvas.height; this.s=Math.random()*2+1; this.vx=(Math.random()-0.5)*1.3; this.vy=(Math.random()-0.5)*1.3; }
-      step(){
-        this.x+=this.vx; this.y+=this.vy;
-        if(this.x<0||this.x>canvas.width) this.vx*=-1;
-        if(this.y<0||this.y>canvas.height) this.vy*=-1;
-        if(mouse.x!=null){
-          const dx=this.x-mouse.x, dy=this.y-mouse.y, d=Math.hypot(dx,dy);
-          if(d<120){ this.x+=(dx/d)*0.9; this.y+=(dy/d)*0.9; }
-        }
-      }
-      draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.s,0,Math.PI*2); ctx.fillStyle=`rgba(${COLOR},.55)`; ctx.fill(); }
-    }
-    for(let i=0;i<COUNT;i++) particles.push(new Particle());
-
-    function connect(){
-      for(let i=0;i<particles.length;i++){
-        for(let j=i+1;j<particles.length;j++){
-          const a=particles[i], b=particles[j];
-          const dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
-          if(d<LINK_DIST){ ctx.strokeStyle=`rgba(${COLOR},.12)`; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
-        }
+    for (const sec of sections) {
+      if (sec.getBoundingClientRect().top <= trigger) {
+        activeId = sec.id;
       }
     }
-    (function loop(){ ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.step(); p.draw();}); connect(); requestAnimationFrame(loop); })();
+    setActive(activeId);
+  };
+
+  window.addEventListener("scroll", update, { passive: true });
+  // Ook bij pagina-load meteen de juiste dot actief zetten
+  document.addEventListener("DOMContentLoaded", update);
+  update();
+})();
+
+
+
+/* ═══════════════════════════════════════
+   3. HERO CANVAS — dot field
+═══════════════════════════════════════ */
+(function () {
+  const canvas = document.getElementById("heroCanvas");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  const GOLD = "245,197,66";
+  const COUNT = 100;
+  const LINK  = 130;
+  let mouse = { x: null, y: null };
+
+  const resize = () => {
+    canvas.width  = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+  };
+  window.addEventListener("resize", resize, { passive: true });
+  resize();
+
+  document.addEventListener("mousemove", (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  }, { passive: true });
+
+  class Dot {
+    constructor() { this.reset(); }
+    reset() {
+      this.x  = Math.random() * canvas.width;
+      this.y  = Math.random() * canvas.height;
+      this.r  = Math.random() * 1.8 + .8;
+      this.vx = (Math.random() - .5) * .9;
+      this.vy = (Math.random() - .5) * .9;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > canvas.width)  this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height)  this.vy *= -1;
+      if (mouse.x !== null) {
+        const dx = this.x - mouse.x, dy = this.y - mouse.y;
+        const d  = Math.hypot(dx, dy);
+        if (d < 100) { this.x += (dx / d) * .7; this.y += (dy / d) * .7; }
+      }
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${GOLD},.55)`;
+      ctx.fill();
+    }
   }
 
+  const dots = Array.from({ length: COUNT }, () => new Dot());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const introSection = document.querySelector(".company-intro");
-  if (!introSection) return;
-
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          introSection.classList.add("in-view");
-          io.unobserve(introSection); // maar één keer afspelen
+  const connect = () => {
+    for (let i = 0; i < dots.length; i++) {
+      for (let j = i + 1; j < dots.length; j++) {
+        const a = dots[i], b = dots[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < LINK) {
+          ctx.strokeStyle = `rgba(${GOLD},${.14 * (1 - d / LINK)})`;
+          ctx.lineWidth   = .8;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
         }
-      });
-    },
-    { threshold: 0.25 }
-  );
-
-  io.observe(introSection);
-});
-
-
-
-
-
-
-
-  // ====== 6) Power-section (scoped & unique classes)
-  const power = $("#power-section");
-  if (power) {
-    gsap.context(()=>{
-      gsap.to(".power-orb",{ xPercent:15, yPercent:-20, scale:1.15, repeat:-1, yoyo:true, duration:10, ease:"power1.inOut" });
-      const tl = gsap.timeline({ scrollTrigger:{ trigger:power, start:"top 80%", end:"bottom 50%", once:true }});
-      tl.to("#power-section .headline span",{ opacity:1, y:0, stagger:.3, duration:1.1, ease:"power3.out" })
-        .to("#power-section .power-text p",{ opacity:1, y:0, stagger:.2, duration:.9, ease:"power2.out" },"-=0.3")
-        .to("#power-section .power-cta",{ opacity:1, y:0, duration:.9, ease:"back.out(1.6)" },"-=0.2");
-    }, power);
-  }
-
-
-
-
-
-
-
-  // ====== 7) Glow follow (guarded)
-  const glow = $(".glow-overlay");
-  if (glow && glow.parentElement){
-    document.addEventListener("mousemove",(e)=>{
-      const rect = glow.parentElement.getBoundingClientRect();
-      if(rect.width===0||rect.height===0) return;
-      const x=e.clientX-rect.left, y=e.clientY-rect.top;
-      glow.style.background=`radial-gradient(circle at ${x}px ${y}px, rgba(255,234,50,0.35), transparent 70%)`;
-    }, {passive:true});
-  }
-
-  // ===== Respect reduced motion
-  mm.add("(prefers-reduced-motion: reduce)", () => {
-    gsap.globalTimeline.timeScale(0); // pauze animaties
-    ScrollTrigger.getAll().forEach(st => st.disable());
-  });
-
-  // ===== Ensure triggers recalc after media load
-  window.addEventListener('load', () => ScrollTrigger.refresh(), {once:true});
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  document.addEventListener("DOMContentLoaded", () => {
-  const section = document.querySelector("#power-section");
-  if (!section) return;
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Achtergrond orb animatie
-  gsap.to(".power-orb", {
-    xPercent: 15,
-    yPercent: -20,
-    scale: 1.1,
-    repeat: -1,
-    yoyo: true,
-    duration: 10,
-    ease: "power1.inOut",
-  });
-
-  // Gebruik gsap.context voor scope
-  gsap.context(() => {
-
-    // Basis animatie voor alle tekst
-    const rightTexts = gsap.utils.toArray("#power-section .right-text p");
-
-    rightTexts.forEach((p, i) => {
-      gsap.fromTo(p,
-        { opacity: 0, y: 80 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          delay: i * 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: p,
-            start: "top 90%",
-            toggleActions: "play none none none",
-          }
-        }
-      );
-    });
-
-    // Linker intro
-    gsap.from("#power-section .left-intro", {
-      x: -100,
-      opacity: 0,
-      duration: 1.2,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: "#power-section .left-intro",
-        start: "top 85%",
-        toggleActions: "play none none none",
-      },
-    });
-
-    // Divider
-    gsap.from("#power-section .center-divider", {
-      height: 0,
-      opacity: 0,
-      duration: 1.2,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: "#power-section .center-divider",
-        start: "top 85%",
-        toggleActions: "play none none none",
-      },
-    });
-
-    // CTA
-    gsap.from("#power-section .cta-box", {
-      opacity: 0,
-      y: 60,
-      duration: 1.2,
-      ease: "back.out(1.7)",
-      scrollTrigger: {
-        trigger: "#power-section .cta-box",
-        start: "top 90%",
-        toggleActions: "play none none none",
-      },
-    });
-
-  }, "#power-section");
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-gsap.registerPlugin(ScrollTrigger);
-
-// Fade-in van USP-kaarten
-gsap.utils.toArray(".usp__card").forEach((card, i) => {
-  gsap.fromTo(card,
-    { opacity: 0, y: 60 },
-    {
-      opacity: 1, y: 0,
-      duration: 1.2, ease: "power3.out",
-      delay: i * 0.15,
-      scrollTrigger: {
-        trigger: card,
-        start: "top 85%"
       }
     }
-  );
-});
+  };
 
-// Teller-animatie voor cijfers
-const counters = document.querySelectorAll(".stat__number");
-counters.forEach(counter => {
-  let target = +counter.getAttribute("data-target");
-  let triggered = false;
-
-  ScrollTrigger.create({
-    trigger: counter,
-    start: "top 90%",
-    onEnter: () => {
-      if (!triggered) {
-        triggered = true;
-        gsap.to(counter, {
-          innerText: target,
-          duration: 2,
-          snap: { innerText: 1 },
-          ease: "power1.out"
-        });
-      }
-    }
-  });
-});
+  (function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    dots.forEach(d => { d.update(); d.draw(); });
+    connect();
+    requestAnimationFrame(loop);
+  })();
+})();
 
 
-
-
-
-
-
-
-
-
-
-
-gsap.registerPlugin(ScrollTrigger);
-
-// Tekst fade-in van beide kanten
-gsap.from(".approach-left", {
-  scrollTrigger: { trigger: ".approach-section", start: "top 80%" },
-  x: -80,
-  opacity: 0,
-  duration: 1.2,
-  ease: "power3.out"
-});
-
-gsap.from(".approach-right", {
-  scrollTrigger: { trigger: ".approach-section", start: "top 80%" },
-  x: 80,
-  opacity: 0,
-  duration: 1.2,
-  ease: "power3.out"
-});
-
-// Individuele stappen
-gsap.utils.toArray(".step").forEach((step, i) => {
-  gsap.to(step, {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    delay: i * 0.2,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: step,
-      start: "top 85%"
-    }
-  });
-});
-
-// CTA fade
-gsap.to(".cta-box", {
-  scrollTrigger: { trigger: ".approach-section", start: "top 70%" },
-  opacity: 1,
-  y: 0,
-  duration: 1,
-  ease: "power2.out"
-});
-
-
-
-
-
-
-
-
-
-
-
-
-gsap.registerPlugin(ScrollTrigger);
-
-// Footer animatie – fade + slide up
-gsap.from(".footer-container > div", {
-  scrollTrigger: {
-    trigger: ".footer",
-    start: "top 85%",
-  },
-  y: 60,
-  opacity: 0,
-  duration: 1.2,
-  ease: "power3.out",
-  stagger: 0.25
-});
-
-// Social icons - fade up staggered
-gsap.from(".footer-socials a", {
-  scrollTrigger: {
-    trigger: ".footer-socials",
-    start: "top 90%",
-  },
-  y: 20,
-  opacity: 0,
-  duration: 1,
-  ease: "power2.out",
-  stagger: 0.15
-});
-
-// Bottom copyright - delayed fade in
-gsap.from(".footer-bottom", {
-  scrollTrigger: {
-    trigger: ".footer-bottom",
-    start: "top 95%",
-  },
-  opacity: 0,
-  y: 30,
-  duration: 1.2,
-  ease: "power3.out",
-  delay: 0.3
-});
-
-
-
-
-
-
-
-
-gsap.registerPlugin(ScrollTrigger);
-
-// Reset CSS blokkades
-gsap.set(".mosaic-item", {
-  opacity: 1,
-  x: 0,
-  y: 0,
-  scale: 1
-});
-
-// ULTRA SNELLE SLIDE-IN
-gsap.utils.toArray(".mosaic-item").forEach((item, i) => {
-
-  const directions = [
-    { x: -30, y: 0 }, // van links
-    { x: 30, y: 0 },  // van rechts
-    { x: 0, y: -30 }, // van boven
-    { x: 0, y: 30 },  // van onder
-  ];
-
-  const dir = directions[i % directions.length];
-
-  gsap.from(item, {
-    opacity: 0,
-    x: dir.x,
-    y: dir.y,
-    duration: 0.35, // SNEL
-    ease: "power1.out", // SNEL
-    scrollTrigger: {
-      trigger: item,
-      start: "top 92%",
-      toggleActions: "play none none reverse"
-    }
-  });
-
-});
-
-
-
-
-
-
-
-
-
-
-
+/* ═══════════════════════════════════════
+   4. HERO REVEAL ANIMATIONS
+═══════════════════════════════════════ */
 document.addEventListener("DOMContentLoaded", () => {
-  const vids = document.querySelectorAll("video");
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.play();
-      } else {
-        entry.target.pause();
+  // Badge + sub + actions + stats
+  const simpleReveals = document.querySelectorAll("[data-reveal]");
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("is-visible");
+        revealObserver.unobserve(e.target);
       }
-    })
-  }, { threshold: 0.4 });
+    });
+  }, { threshold: .15 });
+  simpleReveals.forEach(el => revealObserver.observe(el));
 
-  vids.forEach(v => observer.observe(v));
+  // Headline lines — wrap text in inner span for clip reveal
+  document.querySelectorAll("[data-reveal-line]").forEach((line, i) => {
+    const text = line.innerHTML;
+    line.innerHTML = `<span class="rz-hero__line-inner" style="transition-delay:${.18 + i * .14}s">${text}</span>`;
+    // Trigger after a tick
+    setTimeout(() => {
+      line.classList.add("is-visible");
+    }, 120 + i * 80);
+  });
+
+  // Counters
+  document.querySelectorAll(".rz-count").forEach(el => {
+    const target = +el.dataset.target;
+    const duration = 1800;
+    const start = performance.now();
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      io.disconnect();
+      (function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(ease * target);
+        if (p < 1) requestAnimationFrame(tick);
+      })(performance.now());
+    }, { threshold: .5 });
+    io.observe(el);
+  });
+
 });
 
 
+/* ═══════════════════════════════════════
+   5. MAGNETIC BUTTONS
+═══════════════════════════════════════ */
+(function () {
+  document.querySelectorAll("[data-magnetic]").forEach(el => {
+    const STRENGTH = 0.38;
+
+    el.addEventListener("mousemove", (e) => {
+      const rect = el.getBoundingClientRect();
+      const cx   = rect.left + rect.width  / 2;
+      const cy   = rect.top  + rect.height / 2;
+      const dx   = (e.clientX - cx) * STRENGTH;
+      const dy   = (e.clientY - cy) * STRENGTH;
+      el.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+
+    el.addEventListener("mouseleave", () => {
+      el.style.transform = "";
+    });
+  });
+})();
+
+
+/* ═══════════════════════════════════════
+   6. DIENSTEN CARD REVEAL
+═══════════════════════════════════════ */
+(function () {
+  const cards = document.querySelectorAll("[data-dienst-reveal]");
+  if (!cards.length) return;
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("is-visible");
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.18 });
+
+  cards.forEach(c => io.observe(c));
+})();
+
+
+/* ═══════════════════════════════════════
+   7. CONTACT FORM
+═══════════════════════════════════════ */
+(function () {
+  const form    = document.getElementById("contactForm");
+  const success = document.getElementById("formSuccess");
+  if (!form) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Basic validation highlight
+    let valid = true;
+    form.querySelectorAll("[required]").forEach(field => {
+      if (!field.value.trim()) {
+        field.style.borderColor = "rgba(255,80,80,.55)";
+        valid = false;
+        field.addEventListener("input", () => {
+          field.style.borderColor = "";
+        }, { once: true });
+      }
+    });
+    if (!valid) return;
+
+    // Simulate send
+    const btn = form.querySelector(".rz-form__submit");
+    btn.disabled = true;
+    btn.querySelector(".rz-btn__label").textContent = "Versturen…";
+
+    setTimeout(() => {
+      btn.querySelector(".rz-btn__label").textContent = "Verstuurd ✓";
+      success.textContent = "Bedankt! We nemen zo snel mogelijk contact met je op.";
+      success.classList.add("show");
+      form.reset();
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.querySelector(".rz-btn__label").textContent = "Verstuur bericht";
+        success.classList.remove("show");
+      }, 5000);
+    }, 1200);
+  });
+})();
