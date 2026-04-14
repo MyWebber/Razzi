@@ -1,336 +1,439 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="nl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- SEO TITEL -->
-  <title>RAZZI – Strategische Videografie & Premium Content Producties</title>
-
-  <!-- META SEO -->
+  <title>RAZZI – Strategische Videografie &amp; Premium Content Producties</title>
   <meta name="description" content="RAZZI creëert high-end videografie, editing en organische marketingstrategieën die jouw merk laten domineren op social media – zonder advertenties.">
-  <meta name="keywords" content="videografie, editing, content creatie, razzi, social media groei, marketing, premium video, high end videoproductie">
   <meta name="author" content="Razzi Media">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.yourwebsite.com/">
-
-  <!-- OPEN GRAPH -->
-  <meta property="og:title" content="RAZZI – High-end Videografie & Content Productie">
-  <meta property="og:description" content="Premium storytelling, cinematografie en organische groei voor merken die willen domineren.">
-  <meta property="og:image" content="razzi-cover.jpg">
-  <meta property="og:type" content="website">
-
-  <!-- FONTS -->
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- ICONS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <!-- GSAP (SCHOON) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-
-  <!-- CSS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <link rel="stylesheet" href="razzi.css">
 </head>
-
 <body>
-  
-  <!-- INTRO OVERLAY -->
-  <div class="intro-overlay" aria-hidden="true">
-    <div class="intro-content">
-      <img src="razzi logo.png" alt="Razzi Logo" class="intro-logo" />
-      <div class="intro-text"></div>
-    </div>
-  </div>
 
-  <!-- NAVIGATIE -->
-  <nav class="main-nav" aria-label="Hoofdmenu">
-    <div class="logo">
-      <img src="razzi logo.png" alt="Razzi Logo" />
-    </div>
+  <div class="r-cursor" id="rCursor"></div>
+  <div class="r-cursor-dot" id="rDot"></div>
+  <div class="noise" aria-hidden="true"></div>
 
-    <button class="burger" id="burger" aria-label="Menu openen / sluiten">
-      <span></span><span></span><span></span>
-    </button>
+  <!-- LOGO CORNER -->
+  <a class="rz-logo-corner" href="#home" aria-label="Razzi Home">
+    <img src="razzi logo.png" alt="Razzi" />
+  </a>
 
-    <ul class="nav-links" id="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="diensten.html">Diensten</a></li>
-      <li><a href="#portfolio">Projecten</a></li>
-      <li><a href="#contact">Contact</a></li>
+  <!-- DOT NAVIGATIE -->
+  <nav class="rz-dot-nav" id="rzDotNav" aria-label="Paginanavigatie">
+    <ul role="list">
+      <li>
+        <a href="#home" class="rz-dot-nav__item rz-dot-nav__item--active" data-section="home">
+          <span class="rz-dot-nav__label">Home</span>
+          <span class="rz-dot-nav__dot"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#diensten" class="rz-dot-nav__item" data-section="diensten">
+          <span class="rz-dot-nav__label">Diensten</span>
+          <span class="rz-dot-nav__dot"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#portfolio" class="rz-dot-nav__item" data-section="portfolio">
+          <span class="rz-dot-nav__label">Projecten</span>
+          <span class="rz-dot-nav__dot"></span>
+        </a>
+      </li>
+      <li>
+        <a href="#contact" class="rz-dot-nav__item" data-section="contact">
+          <span class="rz-dot-nav__label">Contact</span>
+          <span class="rz-dot-nav__dot"></span>
+        </a>
+      </li>
     </ul>
   </nav>
 
-  <script>
-    const burger = document.getElementById("burger");
-    const nav = document.getElementById("nav-links");
-
-    burger.addEventListener("click", () => {
-      burger.classList.toggle("active");
-      nav.classList.toggle("active");
-    });
-
-    document.querySelectorAll(".nav-links a").forEach(link => {
-      link.addEventListener("click", () => {
-        burger.classList.remove("active");
-        nav.classList.remove("active");
-      });
-    });
-  </script>
-
   <!-- HERO -->
-  <header class="hero" id="home">
-    <canvas id="interactive-bg"></canvas>
+  <header class="rz-hero" id="home">
+    <canvas class="rz-hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="rz-hero__orb rz-hero__orb--1" aria-hidden="true"></div>
+    <div class="rz-hero__orb rz-hero__orb--2" aria-hidden="true"></div>
+    <div class="rz-hero__orb rz-hero__orb--3" aria-hidden="true"></div>
+    <div class="rz-hero__scan" aria-hidden="true"></div>
 
-    <div class="hero-inner">
-      <div class="hero-content">
-        <h1>Strategische Videografie die resultaat levert</h1>
-        <p>Wij combineren cinematografische storytelling met organische marketing om jouw merk zichtbaar te maken zonder advertenties.</p>
+    <div class="rz-hero__inner">
 
-        <div class="usp-list">
-          <span class="usp">Cinematische kwaliteit</span>
-          <span class="usp">Organische groei</span>
-        </div>
-
-        <div class="cta-buttons">
-          <a href="#contact" class="btn btn-primary">Plan een gesprek</a>
-          <a href="#portfolio" class="btn btn-outline">Bekijk portfolio</a>
-        </div>
+      <div class="rz-hero__badge" data-reveal>
+        <span class="rz-hero__badge-pulse"></span>
+        <span>&#10022; Videoproductie &amp; Contentstrategie</span>
       </div>
 
-      <div class="hero-visual">
-        <div class="floating-circle"></div>
+      <h1 class="rz-hero__title">
+        <span class="rz-hero__line" data-reveal-line>Wij cre&euml;ren</span>
+        <span class="rz-hero__line rz-hero__line--gold" data-reveal-line>premium</span>
+        <span class="rz-hero__line rz-hero__line--outline" data-reveal-line>videocontent.</span>
+      </h1>
+
+      <p class="rz-hero__sub" data-reveal>
+        Cinematische kwaliteit, authentieke storytelling en een strategie<br class="rz-br">
+        die zorgt dat jouw merk groeit &mdash; zonder &eacute;&eacute;n euro advertentiebudget.
+      </p>
+
+      <div class="rz-hero__actions" data-reveal>
+        <a href="#contact" class="rz-btn rz-btn--fill" data-magnetic>
+          <span class="rz-btn__label">Start mijn project</span>
+          <span class="rz-btn__icon"><i class="fas fa-arrow-right"></i></span>
+          <span class="rz-btn__bg"></span>
+        </a>
+        <a href="#portfolio" class="rz-btn rz-btn--line">
+          <span class="rz-btn__label">Bekijk het werk</span>
+        </a>
       </div>
+
+
+    </div>
+
+    <!-- Integrated right-side visual -->
+    <div class="rz-hero__visual" aria-hidden="true">
+      <img src="razzi foto.jpg" alt="" />
+    </div>
+
+    <div class="rz-hero__scroll" aria-hidden="true">
+      <div class="rz-hero__scroll-track"><div class="rz-hero__scroll-thumb"></div></div>
+      <span>Scroll</span>
     </div>
   </header>
 
-  <!-- INTRODUCTIE -->
-  <section class="company-intro">
-    <div class="intro-container">
-      <div class="intro-left">
-        <h2 class="intro-title">Wij transformeren <span>ideeën</span> naar <span>digitale impact</span></h2>
-        <p class="intro-subtext">Strategie, script en apparatuur komen samen om merken te versterken. Elke frame is bedacht met precisie.</p>
-        <a href="#contact" class="intro-btn btn-primary">Ontdek onze aanpak</a>
-      </div>
-      <div class="intro-card">
-  <img src="razzi foto.jpg" alt="Razzi Project" loading="lazy">
-  <div class="card-overlay"></div>
-</div>
+  <!-- DIENSTEN -->
+  <section class="rz-diensten" id="diensten">
 
+    <!-- Decoratieve achtergrond tekst -->
+    <div class="rz-diensten__watermark" aria-hidden="true">RAZZI</div>
+
+    <!-- Section header -->
+    <div class="rz-diensten__header">
+      <div class="rz-diensten__header-left">
+        <span class="rz-diensten__label">— Wat wij doen</span>
+        <h2 class="rz-diensten__title">
+          Beeld dat<br><em>blijft hangen</em>
+        </h2>
+      </div>
+      <p class="rz-diensten__intro">
+        Wij vertellen jouw verhaal op de manier die het verdient. Met licht, compositie en gevoel. Geen standaard shoots — maar beelden die mensen raken en merken laten groeien.
+      </p>
     </div>
+
+    <!-- Dienst 01 — Videografie -->
+    <div class="rz-dienst" data-dienst-reveal>
+      <div class="rz-dienst__media">
+        <div class="rz-dienst__img" style="background-image:url('Afbeelding 1.jpg')"></div>
+        <div class="rz-dienst__media-overlay"></div>
+        <div class="rz-dienst__media-tag"><i class="fas fa-video"></i> Videografie</div>
+      </div>
+      <div class="rz-dienst__content">
+        <span class="rz-dienst__num">01</span>
+        <h3 class="rz-dienst__name">Videografie</h3>
+        <p class="rz-dienst__text">
+          Elk merk heeft een verhaal. Wij vertellen dat verhaal in bewegend beeld — van de eerste conceptschets tot de laatste kleurgrade. Cinematisch, doelgericht en volledig op maat.
+        </p>
+        <div class="rz-dienst__tags">
+          <span>Merkfilms</span>
+          <span>Social Content</span>
+          <span>Reels</span>
+          <span>Events</span>
+        </div>
+        <a href="#contact" class="rz-dienst__link" data-magnetic>
+          <span>Meer weten</span>
+          <span class="rz-dienst__link-arrow"><i class="fas fa-arrow-right"></i></span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Marquee strip -->
+    <div class="rz-diensten__marquee" aria-hidden="true">
+      <div class="rz-diensten__marquee-track">
+        <span>Videografie</span><span class="dot">·</span>
+        <span>Fotografie</span><span class="dot">·</span>
+        <span>Storytelling</span><span class="dot">·</span>
+        <span>Branding</span><span class="dot">·</span>
+        <span>Social Content</span><span class="dot">·</span>
+        <span>Strategie</span><span class="dot">·</span>
+        <span>Videografie</span><span class="dot">·</span>
+        <span>Fotografie</span><span class="dot">·</span>
+        <span>Storytelling</span><span class="dot">·</span>
+        <span>Branding</span><span class="dot">·</span>
+        <span>Social Content</span><span class="dot">·</span>
+        <span>Strategie</span><span class="dot">·</span>
+      </div>
+    </div>
+
+    <!-- Dienst 02 — Fotografie -->
+    <div class="rz-dienst rz-dienst--flip" data-dienst-reveal>
+      <div class="rz-dienst__media">
+        <div class="rz-dienst__img" style="background-image:url('Afbeelding 3.jpg')"></div>
+        <div class="rz-dienst__media-overlay"></div>
+        <div class="rz-dienst__media-tag"><i class="fas fa-camera"></i> Fotografie</div>
+      </div>
+      <div class="rz-dienst__content">
+        <span class="rz-dienst__num">02</span>
+        <h3 class="rz-dienst__name">Fotografie</h3>
+        <p class="rz-dienst__text">
+          Eén krachtig beeld zegt meer dan duizend woorden. Van productshots tot editorial portret — wij zorgen dat elk frame jouw merk op het allerbeste weergeeft.
+        </p>
+        <div class="rz-dienst__tags">
+          <span>Productfotografie</span>
+          <span>Portret</span>
+          <span>Lifestyle</span>
+          <span>Editorial</span>
+        </div>
+        <a href="#contact" class="rz-dienst__link" data-magnetic>
+          <span>Meer weten</span>
+          <span class="rz-dienst__link-arrow"><i class="fas fa-arrow-right"></i></span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="rz-diensten__cta-bar">
+      <div class="rz-diensten__cta-line"></div>
+      <div class="rz-diensten__cta-inner">
+        <div>
+          <p class="rz-diensten__cta-label">Jouw project</p>
+          <p class="rz-diensten__cta-title">Klaar om te beginnen?</p>
+        </div>
+        <a href="#contact" class="rz-btn rz-btn--fill" data-magnetic>
+          <span class="rz-btn__label">Start een project</span>
+          <span class="rz-btn__icon"><i class="fas fa-arrow-right"></i></span>
+          <span class="rz-btn__bg"></span>
+        </a>
+      </div>
+    </div>
+
   </section>
 
-  <!-- PARTNERS -->
-  <section class="partners" id="partners">
-    <div class="partners-header">
-      <span class="section-label">Vertrouwd door</span>
-      <h2>Bedrijven waar wij mee samenwerken</h2>
-    </div>
+  <!-- PORTFOLIO / SOCIAL PROOF -->
+  <section class="rz-proof" id="portfolio">
 
-    <div class="logo-slider">
-      <div class="logo-track">
-        <!-- optimized lazy loading -->
- <img src="hcg logo.png" alt="Apple" />
-            <img src="Andy logo.png" alt="Spotify" />
-            <img src="kbg logo.png" alt="Microsoft" />
-            <img src="fa-logo-PA-B.svg" alt="Coca Cola" />
-            <img src="heroluxury-logo-white.avif" alt="Adidas" />
-            <img src="ssw logo.webp" alt="Tesla" />
-            <img src="lucky jones logo.png" alt="Spotify" />
-            <img src="les je vrrij logo.webp" alt="Amazon" />
-            <img src="AKDA-Detailing-Logo.png" alt="Apple" />
-            <img src="cropped-zenthaiorg-removebg-preview-1-e1761938714601.webp" alt="Google" />
-            <img src="barbershop fuego.png" alt="Spotify" />
-            <img src="zasushi logo.png" alt="Spotify" />
-      <!-- duplicatie voor oneindige loop -->
-            <img src="hcg logo.png" alt="Apple" />
-            <img src="Andy logo.png" alt="Spotify" />
-            <img src="kbg logo.png" alt="Microsoft" />
-            <img src="fa-logo-PA-B.svg" alt="Coca Cola" />
-            <img src="heroluxury-logo-white.avif" alt="Adidas" />
-            <img src="ssw logo.webp" alt="Tesla" />
-            <img src="lucky jones logo.png" alt="Spotify" />
-            <img src="les je vrrij logo.webp" alt="Amazon" />
-            <img src="AKDA-Detailing-Logo.png" alt="Apple" />
-            <img src="cropped-zenthaiorg-removebg-preview-1-e1761938714601.webp" alt="Google" />
-            <img src="barbershop fuego.png" alt="Spotify" />
-            <img src="zasushi logo.png" alt="Spotify" />
-
-        <!-- duplicated for loop -->
-      </div>
-    </div>
-  </section>
-
-  <!-- POWER SECTION -->
-  <section class="power-section" id="power-section">
-    <div class="power-container">
-      <div class="left-intro">
-        <span class="section-label">De kracht van content</span>
-        <h2 class="intro-title">Van aandacht naar <span>invloed</span></h2>
-      </div>
-
-      <div class="center-divider"></div>
-
-      <div class="right-text">
-        <p class="lead"><strong>Social media is geen podium, maar een gesprek.</strong></p>
-        <p>Wij creëren content die niet alleen gezien wordt, maar gevoeld wordt.</p>
-        <p>Elke seconde vertelt iets over je merk. Onze taak? Zorgen dat dat blijft hangen.</p>
-
-        <div class="cta-box">
-          <a href="#contact" class="cta-btn btn-primary">Ontdek onze aanpak</a>
+    <!-- Partners strip -->
+    <div class="rz-proof__partners">
+      <span class="rz-proof__partners-label">Vertrouwd door</span>
+      <div class="rz-proof__partners-track" aria-hidden="true">
+        <div class="rz-proof__partners-inner">
+          <img src="AKDA-Detailing-Logo.png"   alt="AKDA Detailing" />
+          <img src="Andy logo.png"              alt="Andy" />
+          <img src="barbershop fuego.png"       alt="Barbershop Fuego" />
+          <img src="fa-logo-PA-B.svg"           alt="FA" />
+          <img src="hcg logo.png"               alt="HCG" />
+          <img src="kbg logo.png"               alt="KBG" />
+          <img src="les je vrrij logo.webp"     alt="Les Je Vrij" />
+          <img src="lucky jones logo.png"       alt="Lucky Jones" />
+          <img src="MYWEBBER WIT.png"           alt="MyWebber" />
+          <img src="ssw logo.webp"              alt="SSW" />
+          <img src="zasushi logo.png"           alt="Za Sushi" />
+          <img src="Zenthai logo.webp"          alt="Zenthai" />
+          <!-- duplicate set for seamless loop -->
+          <img src="AKDA-Detailing-Logo.png"   alt="" />
+          <img src="Andy logo.png"              alt="" />
+          <img src="barbershop fuego.png"       alt="" />
+          <img src="fa-logo-PA-B.svg"           alt="" />
+          <img src="hcg logo.png"               alt="" />
+          <img src="kbg logo.png"               alt="" />
+          <img src="les je vrrij logo.webp"     alt="" />
+          <img src="lucky jones logo.png"       alt="" />
+          <img src="MYWEBBER WIT.png"           alt="" />
+          <img src="ssw logo.webp"              alt="" />
+          <img src="zasushi logo.png"           alt="" />
+          <img src="Zenthai logo.webp"          alt="" />
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- PROJECT MOSAIC -->
-  <section class="projects-showcase" id="portfolio">
+    <!-- Review -->
+    <div class="rz-proof__review" data-reveal>
+      <p class="rz-proof__review-label">&#8212; Klantervaringen</p>
+      <div class="rz-proof__review-inner">
+        <div class="rz-proof__review-accent" aria-hidden="true"></div>
+        <div class="rz-proof__review-glow" aria-hidden="true"></div>
+        <div class="rz-proof__review-qdeco" aria-hidden="true">&rdquo;</div>
 
-    <div class="showcase-header">
-      <h2 class="showcase-title">Fractie van onze <span>Projecten</span></h2>
-      <p class="showcase-subtitle">Waar creativiteit, design en technologie samensmelten tot een visueel verhaal.</p>
-    </div>
+        <div class="rz-proof__stars" aria-label="5 sterren">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <span class="rz-proof__stars-text">5.0</span>
+        </div>
 
-    <div class="mosaic-grid">
-      <div class="mosaic-item large from-left">
-        <video autoplay muted loop playsinline preload="metadata" loading="lazy">
-          <source src="ScreenRecording_11-10-2025 11-06-48_1.mp4" type="video/mp4">
-        </video>
-      </div>
+        <blockquote class="rz-proof__quote">
+          &ldquo;RAZZI heeft ons merk volledig getransformeerd. De video&rsquo;s spreken voor zich &mdash; we zagen direct meer engagement, meer vertrouwen en uiteindelijk meer klanten.&rdquo;
+        </blockquote>
 
-      <div class="mosaic-item medium from-top">
-        <video autoplay muted loop playsinline preload="metadata" loading="lazy">
-          <source src="ScreenRecording_11-10-2025 10-56-58_1.mp4" type="video/mp4">
-        </video>
-      </div>
+        <div class="rz-proof__review-divider" aria-hidden="true"></div>
 
-      <div class="mosaic-item small from-bottom">
-        <video autoplay muted loop playsinline preload="metadata" loading="lazy">
-          <source src="ScreenRecording_11-10-2025 10-56-58_1.mp4" type="video/mp4">
-        </video>
-      </div>
-
-      <div class="mosaic-item small from-right">
-        <video autoplay muted loop playsinline preload="metadata" loading="lazy">
-          <source src="ScreenRecording_11-10-2025 10-56-58_1.mp4" type="video/mp4">
-        </video>
+        <div class="rz-proof__cite">
+          <div class="rz-proof__cite-avatar">DV</div>
+          <div class="rz-proof__cite-info">
+            <p class="rz-proof__cite-name">Daan Verhoeven</p>
+            <p class="rz-proof__cite-role">Founder &mdash; Stroom Studio</p>
+          </div>
+          <span class="rz-proof__cite-badge">
+            <i class="fas fa-circle-check"></i> Verified client
+          </span>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- USP / STATISTIEKEN -->
-  <section class="usp-section" id="why-us">
-    <div class="usp__intro">
-      <h2 class="usp__title">Waarom bedrijven <span>voor ons kiezen</span></h2>
-      <p class="usp__subtitle">Strategie, design en technologie – perfect gecombineerd.</p>
+    <!-- Socials -->
+    <div class="rz-proof__socials">
+      <p class="rz-proof__socials-label">Volg ons</p>
+      <div class="rz-proof__socials-grid">
+
+        <a href="#" class="rz-social-card" data-reveal target="_blank" rel="noopener">
+          <div class="rz-social-card__top">
+            <span class="rz-social-card__icon rz-social-card__icon--ig"><i class="fab fa-instagram"></i></span>
+            <span class="rz-social-card__arrow"><i class="fas fa-arrow-up-right"></i></span>
+          </div>
+          <span class="rz-social-card__stat">12.4K</span>
+          <span class="rz-social-card__handle">@razzi.media</span>
+          <span class="rz-social-card__platform">Instagram</span>
+        </a>
+
+        <a href="#" class="rz-social-card" data-reveal target="_blank" rel="noopener">
+          <div class="rz-social-card__top">
+            <span class="rz-social-card__icon rz-social-card__icon--tt"><i class="fab fa-tiktok"></i></span>
+            <span class="rz-social-card__arrow"><i class="fas fa-arrow-up-right"></i></span>
+          </div>
+          <span class="rz-social-card__stat">48.2K</span>
+          <span class="rz-social-card__handle">@razzi</span>
+          <span class="rz-social-card__platform">TikTok</span>
+        </a>
+
+        <a href="#" class="rz-social-card" data-reveal target="_blank" rel="noopener">
+          <div class="rz-social-card__top">
+            <span class="rz-social-card__icon rz-social-card__icon--yt"><i class="fab fa-youtube"></i></span>
+            <span class="rz-social-card__arrow"><i class="fas fa-arrow-up-right"></i></span>
+          </div>
+          <span class="rz-social-card__stat">8.1K</span>
+          <span class="rz-social-card__handle">RAZZI Media</span>
+          <span class="rz-social-card__platform">YouTube</span>
+        </a>
+
+        <a href="#" class="rz-social-card" data-reveal target="_blank" rel="noopener">
+          <div class="rz-social-card__top">
+            <span class="rz-social-card__icon rz-social-card__icon--li"><i class="fab fa-linkedin-in"></i></span>
+            <span class="rz-social-card__arrow"><i class="fas fa-arrow-up-right"></i></span>
+          </div>
+          <span class="rz-social-card__stat">3.6K</span>
+          <span class="rz-social-card__handle">RAZZI Media</span>
+          <span class="rz-social-card__platform">LinkedIn</span>
+        </a>
+
+      </div>
     </div>
 
-    <div class="usp__grid">
-      <div class="usp__card">
-        <div class="usp__icon"><i class="fas fa-bolt"></i></div>
-        <h3>Snelle realisatie</h3>
-        <p>Campagnes klaar binnen weken, zonder kwaliteitsverlies.</p>
-      </div>
-
-      <div class="usp__card">
-        <div class="usp__icon"><i class="fas fa-crown"></i></div>
-        <h3>Premium uitstraling</h3>
-        <p>Wij filmen met aandacht voor detail voor een luxe uitstraling.</p>
-      </div>
-
-      <div class="usp__card">
-        <div class="usp__icon"><i class="fas fa-chart-line"></i></div>
-        <h3>Meetbaar resultaat</h3>
-        <p>Analyse, testing en optimalisatie voor groei die zichtbaar is.</p>
-      </div>
-    </div>
   </section>
 
   <!-- CONTACT -->
-  <section class="razzi-contact-pro" id="contact">
+  <section class="rz-contact" id="contact">
 
-    <div class="rcp-bg-glow"></div>
-    <div class="rcp-bg-line"></div>
+    <!-- Background glow -->
+    <div class="rz-contact__glow" aria-hidden="true"></div>
 
-    <div class="rcp-inner">
-      <div class="rcp-left">
-        <h2 class="rcp-title">Laat je merk <span>groeien</span> met echte impact</h2>
-        <p class="rcp-subtext">Stuur ons je idee — wij maken er premium content van.</p>
+    <div class="rz-contact__inner">
 
-        <div class="rcp-highlights">
-          <span>⚡ Snelle oplevering</span>
-          <span>🎥 High-end productie</span>
-          <span>📈 Strategische aanpak</span>
+      <!-- Left: copy -->
+      <div class="rz-contact__left" data-reveal>
+        <span class="rz-contact__label">&#8212; Neem contact op</span>
+        <h2 class="rz-contact__title">Laten we iets<br><em>bijzonders</em><br>bouwen.</h2>
+        <p class="rz-contact__sub">Een goed gesprek kost niets. Vertel ons over jouw merk, je doelen en wat je wilt bereiken &mdash; wij zorgen voor de rest.</p>
+
+        <ul class="rz-contact__meta">
+          <li>
+            <span class="rz-contact__meta-icon"><i class="fas fa-envelope"></i></span>
+            <a href="mailto:hello@razzi.media">hello@razzi.media</a>
+          </li>
+          <li>
+            <span class="rz-contact__meta-icon"><i class="fas fa-phone"></i></span>
+            <a href="tel:+31612345678">+31 6 12 34 56 78</a>
+          </li>
+          <li>
+            <span class="rz-contact__meta-icon"><i class="fas fa-location-dot"></i></span>
+            <span>Rotterdam, Nederland</span>
+          </li>
+        </ul>
+
+        <div class="rz-contact__socials">
+          <a href="#" aria-label="Instagram" class="rz-contact__social-btn"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="TikTok"    class="rz-contact__social-btn"><i class="fab fa-tiktok"></i></a>
+          <a href="#" aria-label="LinkedIn"  class="rz-contact__social-btn"><i class="fab fa-linkedin-in"></i></a>
         </div>
-
-        <a href="#contact" class="btn btn-primary">Neem contact op</a>
       </div>
 
-      <form class="rcp-card" action="https://formspree.io/f/maygkzwq" method="POST">
-        <h3>Stuur ons een bericht</h3>
+      <!-- Right: form -->
+      <div class="rz-contact__right" data-reveal>
+        <form class="rz-form" id="contactForm" novalidate>
 
-        <div class="rcp-group">
-          <input type="text" name="name" placeholder="Naam" required>
-        </div>
+          <div class="rz-form__row">
+            <div class="rz-form__group">
+              <label class="rz-form__label" for="fcNaam">Naam</label>
+              <input class="rz-form__input" id="fcNaam" type="text" placeholder="Jouw naam" autocomplete="name" required />
+            </div>
+            <div class="rz-form__group">
+              <label class="rz-form__label" for="fcBedrijf">Bedrijf</label>
+              <input class="rz-form__input" id="fcBedrijf" type="text" placeholder="Bedrijfsnaam" autocomplete="organization" />
+            </div>
+          </div>
 
-        <div class="rcp-group">
-          <input type="email" name="email" placeholder="E-mailadres" required>
-        </div>
+          <div class="rz-form__group">
+            <label class="rz-form__label" for="fcEmail">E-mail</label>
+            <input class="rz-form__input" id="fcEmail" type="email" placeholder="jouw@email.nl" autocomplete="email" required />
+          </div>
 
-        <div class="rcp-group">
-          <textarea name="message" rows="4" placeholder="Jouw bericht..." required></textarea>
-        </div>
+          <div class="rz-form__group">
+            <label class="rz-form__label" for="fcDienst">Dienst</label>
+            <div class="rz-form__select-wrap">
+              <select class="rz-form__input rz-form__select" id="fcDienst">
+                <option value="" disabled selected>Kies een dienst</option>
+                <option>Videografie</option>
+                <option>Fotografie</option>
+                <option>Videografie &amp; Fotografie</option>
+                <option>Anders</option>
+              </select>
+              <i class="fas fa-chevron-down rz-form__select-arrow"></i>
+            </div>
+          </div>
 
-        <button type="submit" class="btn btn-primary">Verstuur</button>
-      </form>
+          <div class="rz-form__group">
+            <label class="rz-form__label" for="fcBericht">Bericht</label>
+            <textarea class="rz-form__input rz-form__textarea" id="fcBericht" rows="4" placeholder="Vertel over je project..." required></textarea>
+          </div>
+
+          <button type="submit" class="rz-btn rz-btn--fill rz-form__submit" data-magnetic>
+            <span class="rz-btn__label">Verstuur bericht</span>
+            <span class="rz-btn__icon"><i class="fas fa-paper-plane"></i></span>
+            <span class="rz-btn__bg"></span>
+          </button>
+
+          <p class="rz-form__success" id="formSuccess" aria-live="polite"></p>
+        </form>
+      </div>
+
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer-modern">
-    <div class="footer-inner">
-
-      <div class="footer-col brand">
-        <img src="razzi logo.png" alt="RAZZI" class="footer-logo"/>
-        <p class="tagline">Strategische videografie die resultaat levert</p>
+  <footer class="rz-footer">
+    <div class="rz-footer__inner">
+      <a class="rz-footer__logo" href="index.html">
+        <img src="razzi logo.png" alt="Razzi" />
+      </a>
+      <p class="rz-footer__copy">&copy; 2026 RAZZI Media. Alle rechten voorbehouden.</p>
+      <div class="rz-footer__links">
+        <a href="#">Privacy</a>
+        <a href="#">Voorwaarden</a>
       </div>
-
-      <div class="footer-col links">
-        <h4>Navigatie</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="diensten.html">Diensten</a></li>
-          <li><a href="#portfolio">Projecten</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col contact">
-        <h4>Contact</h4>
-        <p><a >info@voorbeeld.nl</a></p>
-        <p><a >+31 6 12 34 56 78</a></p>
-        <div class="socials">
-          <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-          <a href="#" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-      <p>© <span id="year"></span> RAZZI — Built by 
-        <a href="https://www.my-webber.com" target="_blank">
-          <img src="MYWEBBER WIT.png" alt="MyWebber" class="footer-logo-mini">
-        </a>
-      </p>
     </div>
   </footer>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
 
   <script src="razzi.js" defer></script>
 </body>
