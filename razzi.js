@@ -124,7 +124,6 @@
 
   (function draw() {
     phase += SPEED;
-    const W = canvas.width, H = canvas.height;
     ctx.clearRect(0, 0, W, H);
 
     // Render back → front (painter's algorithm for correct depth layering)
