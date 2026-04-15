@@ -81,17 +81,13 @@
 
 
 /* ═══════════════════════════════════════
-   3. HERO CANVAS — dot field
+   3. HERO CANVAS — vibe orbs
 ═══════════════════════════════════════ */
 (function () {
   const canvas = document.getElementById("heroCanvas");
   if (!canvas) return;
 
   const ctx = canvas.getContext("2d");
-  const GOLD = "245,197,66";
-  const COUNT = 100;
-  const LINK  = 130;
-  let mouse = { x: null, y: null };
 
   const resize = () => {
     canvas.width  = canvas.clientWidth;
@@ -100,61 +96,73 @@
   window.addEventListener("resize", resize, { passive: true });
   resize();
 
+  // Orb definitions — each floats in a slow sine-wave orbit
+  const orbDefs = [
+    { cx: .20, cy: .35, r: .38, color: "245,197,66",   a: .13, sx: .00018, sy: .00024, px: 0,    py: 1.2  },
+    { cx: .72, cy: .55, r: .44, color: "245,197,66",   a: .10, sx: .00014, sy: .00019, px: 2.1,  py: 0.4  },
+    { cx: .50, cy: .80, r: .30, color: "255,220,80",   a: .09, sx: .00021, sy: .00016, px: 4.3,  py: 2.8  },
+    { cx: .85, cy: .20, r: .26, color: "255,255,200",  a: .07, sx: .00017, sy: .00022, px: 1.0,  py: 3.5  },
+    { cx: .10, cy: .75, r: .20, color: "255,200,50",   a: .08, sx: .00023, sy: .00013, px: 3.7,  py: 0.9  },
+    { cx: .60, cy: .15, r: .22, color: "245,197,66",   a: .07, sx: .00015, sy: .00020, px: 5.1,  py: 4.2  },
+  ];
+
+  // Tiny shimmer sparks
+  const SPARK_COUNT = 55;
+  const sparks = Array.from({ length: SPARK_COUNT }, () => ({
+    x: Math.random(),
+    y: Math.random(),
+    r: Math.random() * 1.2 + .3,
+    phase: Math.random() * Math.PI * 2,
+    speed: Math.random() * .0008 + .0003,
+  }));
+
+  let t = 0;
+  let mouse = { x: .5, y: .5 };
+
   document.addEventListener("mousemove", (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
+    mouse.x = e.clientX / canvas.clientWidth;
+    mouse.y = e.clientY / canvas.clientHeight;
   }, { passive: true });
 
-  class Dot {
-    constructor() { this.reset(); }
-    reset() {
-      this.x  = Math.random() * canvas.width;
-      this.y  = Math.random() * canvas.height;
-      this.r  = Math.random() * 1.8 + .8;
-      this.vx = (Math.random() - .5) * .9;
-      this.vy = (Math.random() - .5) * .9;
-    }
-    update() {
-      this.x += this.vx; this.y += this.vy;
-      if (this.x < 0 || this.x > canvas.width)  this.vx *= -1;
-      if (this.y < 0 || this.y > canvas.height)  this.vy *= -1;
-      if (mouse.x !== null) {
-        const dx = this.x - mouse.x, dy = this.y - mouse.y;
-        const d  = Math.hypot(dx, dy);
-        if (d < 100) { this.x += (dx / d) * .7; this.y += (dy / d) * .7; }
-      }
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${GOLD},.55)`;
-      ctx.fill();
-    }
-  }
-
-  const dots = Array.from({ length: COUNT }, () => new Dot());
-
-  const connect = () => {
-    for (let i = 0; i < dots.length; i++) {
-      for (let j = i + 1; j < dots.length; j++) {
-        const a = dots[i], b = dots[j];
-        const d = Math.hypot(a.x - b.x, a.y - b.y);
-        if (d < LINK) {
-          ctx.strokeStyle = `rgba(${GOLD},${.14 * (1 - d / LINK)})`;
-          ctx.lineWidth   = .8;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
-        }
-      }
-    }
-  };
-
   (function loop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    dots.forEach(d => { d.update(); d.draw(); });
-    connect();
+    t++;
+    const W = canvas.width, H = canvas.height;
+
+    // Fade trail for silky motion blur
+    ctx.fillStyle = "rgba(0,0,0,0)";
+    ctx.clearRect(0, 0, W, H);
+
+    // Draw orbs
+    orbDefs.forEach(o => {
+      const mx = (mouse.x - .5) * .06;
+      const my = (mouse.y - .5) * .06;
+      const x  = (o.cx + Math.sin(t * o.sx * 1000 + o.px) * .18 + mx) * W;
+      const y  = (o.cy + Math.cos(t * o.sy * 1000 + o.py) * .14 + my) * H;
+      const r  = o.r * Math.min(W, H);
+
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0,   `rgba(${o.color},${o.a})`);
+      g.addColorStop(.45, `rgba(${o.color},${o.a * .5})`);
+      g.addColorStop(1,   `rgba(${o.color},0)`);
+
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = g;
+      ctx.fill();
+    });
+
+    // Draw shimmer sparks
+    sparks.forEach(s => {
+      const pulse = (Math.sin(t * s.speed * 1000 + s.phase) + 1) * .5;
+      const x = s.x * W;
+      const y = s.y * H;
+      const alpha = pulse * .45 + .05;
+      ctx.beginPath();
+      ctx.arc(x, y, s.r * pulse + .2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(245,197,66,${alpha})`;
+      ctx.fill();
+    });
+
     requestAnimationFrame(loop);
   })();
 })();
